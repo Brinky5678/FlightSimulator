@@ -23,3 +23,7 @@ Pluto = MINORBODIES[1]
 
 #Extract Satellties Types
 Moon = SATELLITES[1]
+
+#Additional Parameters of the Bodies
+j3(:Earth) = -2.532e-6
+j4(:Earth) = -1.61e-6 

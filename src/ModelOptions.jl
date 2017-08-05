@@ -2,7 +2,7 @@
 GRAVITYMODELTYPES = Dict{String, Integer}("none" => 0);
 PLANETMODELTYPES = Dict{String, Integer}("none" => 0); #done
 ATMOSPHEREMODELTYPES = Dict{String, Integer}("none" => 0); #done
-WINDMODELTYPES = Dict{String, Integer}() #<- not implemented
+WINDMODELTYPES = Dict{String, Integer}("none" => 0) #<- not implemented
 
 
 #Function dictionaries

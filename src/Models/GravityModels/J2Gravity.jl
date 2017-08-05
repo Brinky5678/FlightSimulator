@@ -1,21 +1,14 @@
-function J2Gravity(PosRsph::Vector{Float64}, planetvars::Vector{Any})
-  g = zeros(3)
-
+function J2Gravity(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
   #Convert δ (latitude) into co-latitude α
   α = pi/2 - PosRsph[3];
-  Re_r = planetvars[1]/PosRsph[1]
-  J2 = planetvars[5][1]
-  mu = planetvars[2]
+  Re_r = mean_radius(Body)/PosRsph[1]
+  J2planet = j2(Body)
+  muplanet = mu(Body)
 
-  cos(α) == 0 ? sec_a = 1e20 : sec_a = 1/cos(α)
-
-  g[1] += -1.5*J2*Re_r^2*(3*cos(α)^2 - 1)
-  g[3] = 3*mu/R^2*Re_r^2*sin(α)*cos(α)*(g[3] + J2)
-
-  #Central field term
-  g[1] = -mu/R^2*(1+g[1])
-
-  #transform to V-frame
-  return g = [-g[3], g[2], g[1]]
-  
+  #Gravity Field Terms
+  g = zeros(3)
+  g[3] = -muplanet/PosRsph[1]^2*(1- 1.5*J2planet*Re_r^2*(3*cos(α)^2 - 1))
+  g[2] = 0.0
+  g[1] = -(3*muplanet/PosRsph[1]^2*Re_r^2*sin(α)*cos(α)*(g[3] + J2planet))
+  return g
 end
