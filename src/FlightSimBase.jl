@@ -6,7 +6,7 @@ import AstroDynBase: naif_id, μ, mu, j2, mean_radius, equatorial_radius, polar_
     maximum_elevation, maximum_depression, deviation, parent, show,
     right_ascension, right_ascension_rate, declination, declination_rate,
     rotation_angle, rotation_rate, euler_angles, euler_derivatives
-import AstroDynBase: PLANETS, MINORBODIES, SATELLITES
+import AstroDynBase: PLANETS, MINORBODIES, SATELLITES, Sun
 
 #Extract Planet Types
 Mercury = PLANETS[1]
@@ -23,7 +23,3 @@ Pluto = MINORBODIES[1]
 
 #Extract Satellties Types
 Moon = SATELLITES[1]
-
-#Additional Parameters of the Bodies
-j3(:Earth) = -2.532e-6
-j4(:Earth) = -1.61e-6 

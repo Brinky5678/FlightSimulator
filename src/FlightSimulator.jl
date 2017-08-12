@@ -11,15 +11,16 @@ export Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Neptune, Uranus, Plut
 include("MathUtils.jl")
 include("Utils.jl")
 
-#List of constants
-include("ListOfConstants.jl")
+#Include base function first
+include("FlightSimBase.jl")
 
 #simulator Options
-include("SimulatorOptions.jl")
+include("SimulationOptions.jl")
 
 #Model Properties Type
 include("ModelOptions.jl")
 
+#Define the environment models that are included by default
 include("Models\\GravityModels\\CentralGravity.jl")
 DefineGravityModel("central", CentralGravity)
 
@@ -44,6 +45,18 @@ DefineAtmosphereModel("exp", ExpoAtmos
 include("Models\\AtmosphereModels\\US76Atmos.jl")
 DefineAtmosphereModel("us76", US76Atmos)
 
-include("FlightSimBase.jl")
+#Include the Aerodynamic database files
+include("AeroDataBase.jl")
+include("VehicleAeroDataBase.jl")
 
-end
+#Add Planets
+include("Planets.jl")
+
+#Add Spacecrafts
+include("Spacecraft.jl")
+
+#include run simulation ability
+include("RunSimulation.jl")
+
+
+end #module FlightSimulator

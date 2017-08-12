@@ -1,5 +1,6 @@
-include("FlightSimBase.jl")
-include("ModelOptions.jl")
+#For testing only
+#include("FlightSimBase.jl")
+#include("ModelOptions.jl")
 
 #= new functions for the different planets describing;
     - Atmosphere models
