@@ -55,6 +55,12 @@ include("Planets.jl")
 #Add Spacecrafts
 include("Spacecraft.jl")
 
+#Add Nozzle
+include("Nozzle.jl")
+
+#Add Actuators
+include("Actuators.jl")
+
 #include run simulation ability
 include("RunSimulation.jl")
 
