@@ -14,6 +14,8 @@ abstract type AbstractActuator end
                 (if this flag is zero, a non-zero thrust setting is interpreted as on)
     - ConstantFlag; indicates whether or not the thruster generates a constant thrust
                     (in this case, the exhaust velocity becomes the effective velocity)
+    - Force generated; Computed
+    - Moment generated; Computed
 =#
 struct RealisticThruster <: AbstractActuator
 
