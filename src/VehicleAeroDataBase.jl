@@ -25,7 +25,6 @@ mutable struct VehicleAeroDataBase <: AbstractVehicleDataBase
   Cldb::AeroDataBase #roll
   Cmdb::AeroDataBase #pitch
   Cndb::AeroDataBase #yaw
-  AeroDBtoFunc::Function #Convert Database to array of functions
 
  #= Input each axis as a variable amount of arrays encoding the relation
     between the contributions and the inputs it depends on. Size of of array
@@ -89,34 +88,32 @@ function VehicleAeroDataBase(varargs...)
       error("Unexpected Input")
     end
   end
-
-  this.AeroDBtoFunc = function AeroDBtoFunc(
-      VehAeroDataBaseInputOrder::Dict{String,Integer})
-
-    FuncArray = Array{Function,1}(6)
-    FuncArray[1] = AeroFuncArrayContr(this.CDdb, VehAeroDataBaseInputOrder)
-    FuncArray[2] = AeroFuncArrayContr(this.CSdb, VehAeroDataBaseInputOrder)
-    FuncArray[3] = AeroFuncArrayContr(this.CLdb, VehAeroDataBaseInputOrder)
-    FuncArray[4] = AeroFuncArrayContr(this.Cldb, VehAeroDataBaseInputOrder)
-    FuncArray[5] = AeroFuncArrayContr(this.Cmdb, VehAeroDataBaseInputOrder)
-    FuncArray[6] = AeroFuncArrayContr(this.Cndb, VehAeroDataBaseInputOrder)
-
-    CoefficientsArray = function CoefficientsArray(state::Vector{Float64})
-      coeffarray = Vector{Float64}(6)
-      coeffarray[1] = FuncArray[1](state)
-      coeffarray[2] = FuncArray[2](state)
-      coeffarray[3] = FuncArray[3](state)
-      coeffarray[4] = FuncArray[4](state)
-      coeffarray[5] = FuncArray[5](state)
-      coeffarray[6] = FuncArray[6](state)
-      return coeffarray
-    end #CoefficientsArray
-    return CoefficientsArray
-  end #this.AeroDBtoFunc
-
  return this
 end #Constructor
 end #TypeDef
+
+#Convert AerodynamicDatabase to a function computing the coefficients
+function AeroDBtoFunc(db::VehicleAeroDataBase, VehAeroDataBaseInputOrder::Dict{String,Integer})
+  FuncArray = Array{Function,1}(6)
+  FuncArray[1] = AeroFuncArrayContr(db.CDdb, VehAeroDataBaseInputOrder)
+  FuncArray[2] = AeroFuncArrayContr(db.CSdb, VehAeroDataBaseInputOrder)
+  FuncArray[3] = AeroFuncArrayContr(db.CLdb, VehAeroDataBaseInputOrder)
+  FuncArray[4] = AeroFuncArrayContr(db.Cldb, VehAeroDataBaseInputOrder)
+  FuncArray[5] = AeroFuncArrayContr(db.Cmdb, VehAeroDataBaseInputOrder)
+  FuncArray[6] = AeroFuncArrayContr(db.Cndb, VehAeroDataBaseInputOrder)
+
+  CoefficientsArray = function CoefficientsArray(state::Vector{Float64})
+    coeffarray = Vector{Float64}(6)
+    coeffarray[1] = FuncArray[1](state)
+    coeffarray[2] = FuncArray[2](state)
+    coeffarray[3] = FuncArray[3](state)
+    coeffarray[4] = FuncArray[4](state)
+    coeffarray[5] = FuncArray[5](state)
+    coeffarray[6] = FuncArray[6](state)
+    return coeffarray
+  end #CoefficientsArray
+  return CoefficientsArray
+end #this.AeroDBtoFunc
 
 function AeroFuncArrayContr(db::AeroDataBase,
    VehAeroDataBaseInputOrder::Dict{String, Integer})
