@@ -44,12 +44,19 @@ function SetDryMass(vehicle::Type{<:AbstractSpacecraft}, drymass::Number)
 end #SetDryMass
 DryMass(vehicle::Type{<:AbstractSpacecraft}) = VehicleDictionary[vehicle]["DryMass"]
 
-#Setter and Getter function for Fuel
-function SetFuel(vehicle::Type{<:AbstractSpacecraft}, fuel::Number)
-    VehicleDictionary[vehicle]["Fuel"] = Float64(fuel)
+#Setter and Getter function for Fuel of OMS
+function SetFuelOMS(vehicle::Type{<:AbstractSpacecraft}, fuelOMS::Number)
+    VehicleDictionary[vehicle]["FuelOMS"] = Float64(fuelOMS)
     return nothing
 end #SetFuel
-Fuel(Vehicle::Type{<:AbstractSpacecraft}) = VehicleDictionary[vehicle]["Fuel"]
+FuelOMS(Vehicle::Type{<:AbstractSpacecraft}) = VehicleDictionary[vehicle]["FuelOMS"]
+
+#Setter and Getter function for Fuel of RCS
+function SetFuelRCS(vehicle::Type{<:AbstractSpacecraft}, fuelRCS::Number)
+    VehicleDictionary[vehicle]["FuelRCS"] = Float64(fuelOMS)
+    return nothing
+end #SetFuel
+FuelRCS(Vehicle::Type{<:AbstractSpacecraft}) = VehicleDictionary[vehicle]["FuelRCS"]
 
 #Generate Setter and getter functions for reference area
 function SetRefArea(vehicle::Type{<:AbstractSpacecraft}, refarea::Number)

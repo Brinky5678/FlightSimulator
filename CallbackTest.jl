@@ -1,4 +1,4 @@
-using DifferentialEquations
+import DifferentialEquations: ContinousCallBack, ODEProblem, solve, Tsit5
 using ParameterizedFunctions
 using PyPlot
 

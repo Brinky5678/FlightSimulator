@@ -1,24 +1,28 @@
 #Dictionaries containing options
-ODETYPES = Dict{String, Integer}("ode23" => 1,
-                "ode45" => 2,
-                "ode78" => 3,
-                "ode23s" => 4);
+ODETYPES = Dict{String, Integer}("bs3" => 1,
+                "tsit5" => 2,
+                "vern7" => 3,
+                "rodas4" => 4);
 
 DOFSIMTYPES = Dict{String, Integer}("trans" => 1,
                                     "rot" => 2,
                                     "transrot" => 3);
 
+ODEALG = Dict{String, Any}("bs3" => BS3(),
+                           "tsit5" => Tsit5(),
+                           "vern7" => Vern7(),
+                           "rodas4" => Rodas4());
 #SimulationProperties Type
 struct SimulationProperties
   ODE_SolverType::String
   DofSimType::String
 
-  function SimulationProperties(;ODE_SolverIn::String = "ODE45",
+  function SimulationProperties(;ODE_SolverIn::String = "tsit5",
                     DofSimTypeIn::String = "Trans")
     #ODE Type Checker
     if !haskey(ODETYPES, lowercase(ODE_SolverIn))
-      warn("ODE Solver Type Not Found, Setting Solver Type to Default (ODE45)")
-      ODE_SolverIn::String = "ode45"
+      warn("ODE Solver Type Not Found, Setting Solver Type to Default (Tsit5)")
+      ODE_SolverIn::String = "tsit5"
     end
 
     #DofSimType Checker
@@ -35,6 +39,7 @@ struct SimulationProperties
 end
 
 #Add function to allow for custom ode solvers
-function NewODEType(odetype::String)
+function NewODEType(odetype::String, odealg)
     ODETYPES[odetype] = length(ODETYPES) + 1
+    ODEALG[odetype] = odealg
 end #NewODEType

@@ -17,7 +17,7 @@ struct Nozzle <: AbstractNozzle
     ExhaustVelocityData
     ExhaustPressureData
     DataFlag::Bool
-    ExhaustArea::Flat64
+    ExhaustArea::Float64
     MinFuelRate::Float64
     MaxFuelRate::Float64
 
