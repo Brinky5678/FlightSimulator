@@ -1,5 +1,5 @@
 #Defines the control system type, including its discrete time behaviour
-include("DiscreteTimeSystem.jl")
+#include("DiscreteTimeSystem.jl")
 
 #Define ControlSystem as a subtype of the DiscreteTimeSystem
 mutable struct ControlSystem{T<:Number} <: DiscreteTimeSystem
@@ -7,8 +7,8 @@ mutable struct ControlSystem{T<:Number} <: DiscreteTimeSystem
   ControlRelation::Function
   Tprev::T #storage for previous time it was updated, hence must be a mutable type
 end
-ControlSystem(Ts::Number) = ControlSystem(Float64(Ts), x -> (), 0.0, Vector{Float64}())
-ControlSystem(Ts::Number, csfunc::Function) = ControlSystem(Float64(Ts), csfunc, 0.0, Vector{Float64}())
+ControlSystem(Ts::Number) = ControlSystem(Float64(Ts), x -> (), 0.0)
+ControlSystem(Ts::Number, csfunc::Function) = ControlSystem(Float64(Ts), csfunc, 0.0)
 
 #Set the callback affect condition of the ControlSystem
 function affect!(int,dts::ControlSystem)

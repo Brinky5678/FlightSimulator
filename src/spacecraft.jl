@@ -1,4 +1,6 @@
 #To Do: Make it possible to load from file
+#To Do: for the simulation, write states to vehicle
+# States should belong to the vehicle
 
 #Create AbstractSpacecraft type
 abstract type AbstractSpacecraft end
@@ -110,6 +112,11 @@ function SetAerodynamicDatabase(vehicle::Type{<:AbstractSpacecraft}, AeroDB::Veh
 end #SetAerodynamicDatabase
 AerodynamicDatabase(vehicle::Type{<:AbstractSpacecraft}) = VehicleDictionary[vehicle]["AerodynamicDatabase"]
 
+function FrameTransformation(vehicle::Type{<:AbstractSpacecraft}, fm::Type{<:AbstractTransformable},
+     newframe::Type{<:AbstractTransformable})
+
+
+end
 
 #original Code definition of RigidBodyVehicle with rotational inertia
 #struct RigidBodyVehicle <: AbstractSpacecraft
