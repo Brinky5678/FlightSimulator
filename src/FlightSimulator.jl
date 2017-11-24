@@ -22,28 +22,20 @@ include("ModelOptions.jl")
 
 #Define the environment models that are included by default
 include("Models\\GravityModels\\CentralGravity.jl")
-DefineGravityModel("central", CentralGravity)
 
 include("Models\\GravityModels\\J2Gravity.jl")
-DefineGravityModel("j2",J2Gravity)
 
 include("Models\\GravityModels\\J23Gravity.jl")
-DefineGravityModel("j23",J23Gravity)
 
 include("Models\\GravityModels\\J234Gravity.jl")
-DefineGravityModel("j234",J234Gravity)
 
 include("Models\\PlanetModels\\SphericalPlanet.jl")
-DefinePlanetModel("spherical", SphericalAltitude)
 
 include("Models\\PlanetModels\\EllipsoidPlanet.jl")
-DefinePlanetModel("ellipsoid", EllipsoidAltitude)
 
 include("Models\\AtmosphereModels\\ExpoAtmos.jl")
-DefineAtmosphereModel("exp", ExpoAtmos
 
 include("Models\\AtmosphereModels\\US76Atmos.jl")
-DefineAtmosphereModel("us76", US76Atmos)
 
 #Include the Aerodynamic database files
 include("AeroDataBase.jl")

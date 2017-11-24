@@ -1,20 +1,44 @@
-#For testing only
-#include("FlightSimBase.jl")
-#include("ModelOptions.jl")
+#= New PlanetEnvironment Structure
+- For each Celestial body;
+    + Ability to select whether to include in the model - Done
+    + Ability to select a gravity model
+    + Ability to select a planetary model (or none)
+    + Ability to select a atmosphere model (or none)
+    + Ability to select a wind model (or none)
 
-#= new functions for the different planets describing;
-    - Atmosphere models
-    - More Gravity models
-    - Altitude models (geoid)
-
-These functions extend the CelestialBody type and its children as found in AstroDynBase.jl
+    Note that all models are centred at the barycenter of each body. Relative positioning
+    is computed in the equations of motion.
 =#
 
-#Compute the flattening of a CelestialBody
-flattening(Body::Type{<:CelestialBody}) = 1 - (polar_radius(Body)/equatorial_radius(Body))
-#Additional Parameters of the Bodies
-j3(::Type{Earth}) = -2.532e-6
-j4(::Type{Earth}) = -1.61e-6
+abstract type AbstractPlanetEnvironment end
+
+struct PlanetEnvironment <: AbstractPlanetEnvironment
+    Included::Bool
+    GravityModel::Function
+    PlanetFlag::Bool
+    PlanetModel::Function
+    AtmosphereFlag::Bool
+    AtmosphereModel::Function
+    WindFlag::Bool
+    WindModel::Function
+end
+#Additional constructors with different number of inputs
+PlanetEnvironment(incl::Bool) = PlanetEnvironment(incl, x-> nothing)
+PlanetEnvironment(incl::Bool, gravfunc::Function) = PlanetEnvironment(incl, gravfunc,
+                                                        false, x-> nothing)
+PlanetEnvironment(incl::Bool, gravfunc::Function, planetflag::Bool, planetfunc::Function) =
+    PlanetEnvironment(incl, gravfunc, planetflag, planetfunc, false, x-> nothing)
+ function PlanetEnvironment(incl::Bool, gravfunc::Function, planetflag::Bool, planetfunc::Function,
+    atmosphereflag::Bool, atmospherefunc::Function)
+    return PlanetEnvironment(incl, gravfunc, planetflag, planetfunc,
+                                atmosphereflag, atmospherefunc, false, x->nothing)
+end
+#
+
+
+
+###########################################OLD ########################################
+#=
 ########## Consider Adding a time property, based on a to-be-determined epoch
 
 #Create the
@@ -68,3 +92,4 @@ function SetPlanetProperties(planet::Type{<:CelestialBody} = Earth,
   else
       error("Wind Model $(ModelPropIn.WindModelType) does not eixst")
 end
+=#

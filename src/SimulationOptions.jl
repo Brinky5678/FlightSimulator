@@ -12,12 +12,12 @@ ODEALG = Dict{String, Any}("bs3" => BS3(),
                            "tsit5" => Tsit5(),
                            "vern7" => Vern7(),
                            "rodas4" => Rodas4());
-#SimulationProperties Type
-struct SimulationProperties
+#SimulationOptions Type
+struct SimulatationOptions
   ODE_SolverType::String
   DofSimType::String
 
-  function SimulationProperties(;ODE_SolverIn::String = "tsit5",
+  function SimulationOptions(;ODE_SolverIn::String = "tsit5",
                     DofSimTypeIn::String = "Trans")
     #ODE Type Checker
     if !haskey(ODETYPES, lowercase(ODE_SolverIn))

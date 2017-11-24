@@ -1,9 +1,10 @@
 #= Create ODEProblem from the selected Model and Simulation options, and also the selected
     vehicle configurations
 =#
+import JPLEphemeris: SPK, Dates, position, velocity, state
 
 #Create EOM from the vehicle configurations
-function EOM(vehicle::Type{<:AbstractSpacecraft}, simoptions::SimulationProperties)
+function EOM(vehicle::Type{<:AbstractSpacecraft}, env::Environment)
 
     #Create EOM function to be used in the solver
     #=Contribution are:
@@ -16,10 +17,3 @@ function EOM(vehicle::Type{<:AbstractSpacecraft}, simoptions::SimulationProperti
     end #eomfunc
     return eomfunc
 end #EOM
-
-#Create Function that solves the EOM and performs the simulation
-function Sim(vehicle::Type{<:AbstractSpacecraft}, simoptions::SimulationProperties)
-    f = EOM(vehicle, simoptions) #Get EOM function
-
-    sol = solve(prob, alg, reltol=1e-8, abstol=1e-8)
-end #sim

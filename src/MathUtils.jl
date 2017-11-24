@@ -254,34 +254,6 @@ function IdInStringArray(StringArray::Vector{String},ToBeChecked::String)
   error("String not found in String Array")
 end
 
-"""
-```julia
-DCM = Quat2DCM(Quat::Vector{Float64})
-```
-Computes the DCM corresponding the input Quaternion.
-"""
-function Quat2DCM(quat::Vector{Float64})
-
-  if norm(quat) < eps()
-    quat = [1., 0., 0., 0.]
-  end
-
-  q12 = quat[1]^2
-  q22 = quat[2]^2
-  q32 = quat[3]^2
-  q42 = quat[4]^2
-  q1q2 = quat[1]*quat[2]
-  q3q4 = quat[3]*quat[4]
-  q1q3 = quat[1]*quat[3]
-  q2q4 = quat[2]*quat[4]
-  q2q3 = quat[2]*quat[3]
-  q1q4 = quat[1]*quat[4]
-
-  return [[(q12 + q22 - q32 - q42) 2*(q2q3 - q1q4) 2*(q1q3 + q2q4)];
-          [2*(q2q3 + q1q4) (q12 - q22 + q32 - q42) 2*(q3q4 - q1q2)];
-          [2*(-q1q3 + q2q4) 2*(q1q2 + q3q4) (q12 - q22 - q32 + q42)]]
-end
-
 #create function that return 0 no matter the state input
 function zerofunc(idx::Int64)
   aux = repmat([0.],idx,1)
