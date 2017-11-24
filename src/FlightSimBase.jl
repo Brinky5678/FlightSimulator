@@ -23,3 +23,9 @@ Pluto = MINORBODIES[1]
 
 #Extract Satellties Types
 Moon = SATELLITES[1]
+
+#Compute the flattening of a CelestialBody
+flattening(Body::Type{<:CelestialBody}) = 1 - (polar_radius(Body)/equatorial_radius(Body))
+#Additional Parameters of the Bodies
+j3(::Type{Earth}) = -2.532e-6
+j4(::Type{Earth}) = -1.61e-6

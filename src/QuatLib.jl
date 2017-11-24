@@ -1,6 +1,6 @@
 #A Small utility library for Quaternions and their functions
 import Base.size, Base.getindex, Base.setindex!, Base.IndexStyle
-import Base.*, Base.+, Base.-
+import Base.*, Base.+, Base.-, Base./
 
 mutable struct Quaternion <: AbstractArray{Float64,1}
     q1::Float64 #<- scalar part
@@ -49,8 +49,16 @@ end
 Quaternion(q1::Float64, qvec::Vector{Float64}, norm=false) = Quaternion(q1, qvec[1], qvec[2], qvec[3], norm)
 Quaternion(qvec::Vector{Float64}) = Quaternion(0., qvec)
 Quaternion(q1::Float64) = Quaternion(q1, Float64(zeros(3)))
-vec(q::Quaternion) = [q[2] q[3] q[4]]
+vec(q::Quaternion) = [[q[2] q[3] q[4]]...]
 scalar(q::Quaternion) = q[1]
+conjugate(q::Quaternion) = Quaternion(scalar(q), [-vec(q)...], isnormalized(q))
+function inverse(q::Quaternion)
+    if isnormalized(q)
+        return conjugate(q)
+    else
+        return conjugate(q)/(norm(q))^2
+    end
+end
 
 norm(q::Quaternion) = sqrt(q[1]^2 + q[2]^2 + q[3]^2 + q[4]^2)
 function isnormalized(q::Quaternion)
@@ -59,7 +67,7 @@ end
 
 function normalize(q::Quaternion)
     if !q.norm
-        q[1:4] = q[1:4]./norm(q)
+        q = q/norm(q)
         q.norm = true
     end
     return q
@@ -69,7 +77,8 @@ end
 (+)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1] + q2[1], q1[2] + q2[2], q1[3] + q2[3], q1[4] + q2[4],false)
 (-)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1] - q2[1], q1[2] - q2[2], q1[3] - q2[3], q1[4] - q2[4],false)
 (*)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1]*q2[1] - dot(vec(q1),vec(q2)),
-    q[1].*vec(q1) + q2[1].*vec(q2) + cross(vec(q1),vec(q2)),false)
+    q2[1].*vec(q1) + q1[1].*vec(q2) + cross(vec(q1),vec(q2)),false)
+(/)(q::Quaternion, s::Float64) = Quaternion(q[1]/s, q[2:4]./s, false)
 
 
 angleaxis2quat(angle::Float64, axis::Vector{Float64}) = Quaternion(cos(angle/2), axis.*sin(angle/2),true)

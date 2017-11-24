@@ -1,5 +1,5 @@
 ### Temporary
-push!(LOAD_PATH,"C:\\Users\\TUDelft SID\\OneDrive\\Documents\\AeroSimDIY\\Julia\\FlightSimDev\\src")
+#push!(LOAD_PATH,"C:\\Users\\TUDelft SID\\OneDrive\\Documents\\AeroSimDIY\\Julia\\FlightSimDev\\src")
 ## Temporary
 
 #using FlightSimulator
@@ -17,7 +17,7 @@ end
 
 
 # Load the DE430 SPK kernel
-spk = SPK("de430.bsp")
+spk = SPK("D:\\de430.bsp")
 
 # List the available segments
 print_segments(spk)
@@ -37,7 +37,7 @@ vel = velocity(spk, "earth barycenter", "earth", jd)
 # Compute the state vector (position and velocity) of Earth's barycenter (NAIF ID: 3)
 # w.r.t. to the Solar System's barycenter (NAIF ID: 0) for a range of Julian days
 st0 = state(spk, 0, 3, jd)
-st = state(spk, 0, 3, jd, 100.0)
+st = state(spk, 0, 3, jd, 1.0)
 st1 = state(spk, 0, 3, jd:jd+100)
 
 # Two-part Julian dates (day number and fraction) can be used for higher precision.
