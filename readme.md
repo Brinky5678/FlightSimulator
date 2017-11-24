@@ -54,15 +54,6 @@ Features that will be included are;
       * Discrete Time System Interface running at specified update frequency (event)
     + Ability to load from JSON configuration file (ToDo)
 
-     Custom property API example:
-    ```julia
-    #Setter and Getter function for the solar radiation pressure area (SRParea)
-    function SetSRPArea(vehicle::Type{<:AbstractSpacecraft}, SRParea::Number)
-        VehicleDictionary[vehicle]["SRPArea"] = Float64(SRParea)
-        return nothing
-    end #SetSRPArea
-    SRPArea(vehicle::Type{<:AbstractSpacecraft}) = VehicleDictionary[vehicle]["SRPArea"]
-    ```
 
 - Ability to define custom thruster models (ToDo)
   + Thruster structure
