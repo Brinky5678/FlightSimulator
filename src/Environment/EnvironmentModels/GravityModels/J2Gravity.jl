@@ -1,4 +1,4 @@
-function J2Gravity(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
+function J2Gravity(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCelestialBody}
   #Convert δ (latitude) into co-latitude α
   α = pi/2 - PosRsph[3];
   Re_r = mean_radius(Body)/PosRsph[1]

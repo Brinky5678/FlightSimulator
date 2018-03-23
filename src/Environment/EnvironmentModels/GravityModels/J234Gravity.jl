@@ -1,4 +1,4 @@
-function J234Gravity(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
+function J234Gravity(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCelestialBody}
   g = zeros(3)
   #Convert δ (latitude) into co-latitude α
   α = pi/2 - PosRsph[3];

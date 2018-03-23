@@ -4,8 +4,6 @@ import AstroDynBase: naif_id, μ, mu, j2, mean_radius, equatorial_radius, polar_
     right_ascension, right_ascension_rate, declination, declination_rate,
     rotation_angle, rotation_rate, euler_angles, euler_derivatives
 
-include("PlanetEnvironment.jl")
-
 #Define abstract planet type that functions as a wrapper of the CelestialBody struct of AstroDynBase
 abstract type abstractCelestialBody end 
 abstract type abstractPlanet <: abstractCelestialBody end 

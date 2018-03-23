@@ -1,6 +1,6 @@
 """
 ```julia
-h = SphericalAltitude(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
+h = SphericalAltitude(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCelestialBody}
 ```
 Computes the altitude above a spherical central body with radius Re.
 """

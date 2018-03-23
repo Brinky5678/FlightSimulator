@@ -1,5 +1,3 @@
-include("CelestialBodies.jl")
-
 #define abstract planetary system 
 abstract type abstractPlanetarySystem end 
 
@@ -98,12 +96,3 @@ function SystemValidation(Bodies::Vector{T}) where {T <: abstractCelestialBody}
     return false 
  
 end #Function TwoPlanetsWithoutSunSelected
-
-
-################################# 
-#-------- Testing Only ----------
-#################################
-ListOfBodies = [Sun, Earth, Mars]
-println(ListOfBodies)
-NewSystem = PlanetarySystem(ListOfBodies)
-println(NewSystem)

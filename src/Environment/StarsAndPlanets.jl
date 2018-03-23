@@ -1,8 +1,3 @@
-include("CelestialBodies.jl")
-#include("PlanetEnvironment.jl")
-include("EnvironmentModels\\GravityModels\\CentralGravity.jl")
-include("EnvironmentModels\\PlanetModels\\SphericalPlanet.jl")
-
 #Additional constructors for the PlanetEnvironment with different number of inputs
 PlanetEnvironment() = PlanetEnvironment(CentralGravity)
 PlanetEnvironment(gravfunc::Function) = PlanetEnvironment(gravfunc, SphericalAltitude)
@@ -32,10 +27,3 @@ Saturn = Planet(SaturnType)
 Uranus = Planet(UranusType)
 Neptune = Planet(NeptuneType)
 Pluto = Planet(PlutoType)
-
-################################# 
-#-------- Testing Only ----------
-#################################
-#println((parent(Earth) == parent(Luna)))
-println(j2(Earth))
-println(Earth.Environment.GravityModel(Earth, [6378000.0, 0.0, 0.0]))

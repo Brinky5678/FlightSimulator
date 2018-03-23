@@ -1,11 +1,11 @@
 """
 ```julia
-h = EllipsoidAltitude(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
+h = EllipsoidAltitude(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCelestialBody}
 ```
 Computes the altitude above the reference ellipsoid with equatorial radius `Re`,
 and a flattening `flat`.
 """
 
-function EllipsoidAltitude(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
+function EllipsoidAltitude(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCelestialBody}
   return PosRsph[1] - equatorial_radius(Body)*(1-flattening(Body)*sin(PosRsph[3])^2)
 end
