@@ -2,16 +2,24 @@
     vehicle configurations
 =#
 import JPLEphemeris: SPK, Dates, position, velocity, state
+include("..\\Vehicle\\Spacecraft.jl")
+include("..\\Environment\\Environment.jl")
+include("State.jl")
+
 
 #Create EOM from the vehicle configurations
 function EOM(vehicle::Type{<:AbstractSpacecraft}, env::Environment)
 
-    #Create EOM function to be used in the solver
-    #=Contribution are:
-        - Gravity (Environment-based)
-        - VehicleShape (Vehicle properties, combined with environmental properties)
-        - VehicleActuators (Vehicle properties, combined with environmental properties)
-    =#
+    # Gravity (Environment-based)
+    #
+
+
+    # VehicleShapeAerodynamics (Vehicle properties, combined with environmental properties)
+
+
+
+    # VehicleActuators (Vehicle properties, combined with environmental properties)
+
     eomfunc = function (y::SimState, t::Float64)
 
     end #eomfunc

@@ -1,10 +1,9 @@
 #= New PlanetEnvironment Structure
 - For each Celestial body;
-    + Ability to select whether to include in the model - Done
-    + Ability to select a gravity model
-    + Ability to select a planetary model (or none)
-    + Ability to select a atmosphere model (or none)
-    + Ability to select a wind model (or none)
+    + Ability to select a gravity model (spherical by default)
+    + Ability to select a planetary model (spherical by default)
+    + Ability to select a atmosphere model (none by default)
+    + Ability to select a wind model (none by default)
 
     Note that all models are centred at the barycenter of each body. Relative positioning
     is computed in the equations of motion.
@@ -13,29 +12,13 @@
 abstract type AbstractPlanetEnvironment end
 
 struct PlanetEnvironment <: AbstractPlanetEnvironment
-    Included::Bool
     GravityModel::Function
-    PlanetFlag::Bool
     PlanetModel::Function
-    AtmosphereFlag::Bool
+    AtmosphereFlag::Bool #Boolean to determine whether atmoshpere model should be looked at
     AtmosphereModel::Function
-    WindFlag::Bool
+    WindFlag::Bool #Boolean to determine whether wind model should be looked at
     WindModel::Function
 end
-#Additional constructors with different number of inputs
-PlanetEnvironment(incl::Bool) = PlanetEnvironment(incl, x-> nothing)
-PlanetEnvironment(incl::Bool, gravfunc::Function) = PlanetEnvironment(incl, gravfunc,
-                                                        false, x-> nothing)
-PlanetEnvironment(incl::Bool, gravfunc::Function, planetflag::Bool, planetfunc::Function) =
-    PlanetEnvironment(incl, gravfunc, planetflag, planetfunc, false, x-> nothing)
- function PlanetEnvironment(incl::Bool, gravfunc::Function, planetflag::Bool, planetfunc::Function,
-    atmosphereflag::Bool, atmospherefunc::Function)
-    return PlanetEnvironment(incl, gravfunc, planetflag, planetfunc,
-                                atmosphereflag, atmospherefunc, false, x->nothing)
-end
-#
-
-
 
 ###########################################OLD ########################################
 #=

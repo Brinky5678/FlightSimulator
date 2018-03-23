@@ -15,9 +15,7 @@ tree-like structure?  Make the frames abstract struct will do the trick!
 Supertypes will then determine which transformations needs to be explicetely written!
 =#
 
-#Define abstract transformable type
-
-
+#Define Supertype of the reference frames
 abstract type AbstractFrame end
 
 function NewFrame(name::String)

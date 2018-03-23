@@ -8,6 +8,7 @@ function J234Gravity(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
   J4planet = j4(Body)
   muplanet = mu(Body)
   R = PosRsph[1]
+  sec_a = 0
   #Division by zero check
   cos(α) == 0 ? sec_a = 1e20 : sec_a = 1/cos(α)
   #Fourth order correction

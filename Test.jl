@@ -1,7 +1,3 @@
-### Temporary
-#push!(LOAD_PATH,"C:\\Users\\TUDelft SID\\OneDrive\\Documents\\AeroSimDIY\\Julia\\FlightSimDev\\src")
-## Temporary
-
 #using FlightSimulator
 import JPLEphemeris: SPK, print_segments, Dates, position, velocity, state
 
@@ -42,4 +38,4 @@ st1 = state(spk, 0, 3, jd:jd+100)
 
 # Two-part Julian dates (day number and fraction) can be used for higher precision.
 # For example for 2016-01-01T12:00:
-#st = state(spk, 0, 3, jd, 0.5)
+#st = state(spk, 0, 3, jd=, 0.5)

@@ -55,7 +55,7 @@ taus76(::Type{Earth}) = -76.3232
 saus76(::Type{Earth}) = -19.9426
 rlamus76(::Type{Earth}) = 0.01875
 
-
+import AstroDynBase: CelestialBody
 
 function US76Atmos(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
   zm = Altitude(Body, PosRsph)
@@ -90,7 +90,7 @@ function US76Atmos(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
         tm = tmsus76(Body)[i] + tgus76(Body)[i]*(ht-zl)
 
         #Kinetic temperature
-        tkin = tmus76(Body)*m/m0us76(Body)
+        tkin = tm*m/m0us76(Body)
 
         break;
       end #if (zs[i] <= zKm) && (zKm < zs[i + 1])
@@ -105,7 +105,7 @@ function US76Atmos(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
 
     #linear interpolation on logarithm of totanl number Density
     aux = log(dnssus76(Body)[iz + 1]/dnssus76(Body)[iz])/(zssus76(Body)[iz+1] - zssus76(Body)[iz])
-    d = dnnsus76(Body)[iz] *exp(aux*(zKm - zssus76(Body)[iz]))
+    d = dnssus76(Body)[iz] *exp(aux*(zKm - zssus76(Body)[iz]))
 
     #Molecular scale temperature
     tm = tkin*m0us76(Body)/m
@@ -121,13 +121,13 @@ function US76Atmos(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
     tkin = 0.0
     a = 0.0
   else
-    ρ = m*p/rs/tkin
+    ρ = m*p/rsus76(Body)/tkin
     a = sqrt(γus76(Body)*rsus76(Body)*tkin/m0us76(Body))
   end #if
   return [ρ, p, tkin, a]
 end #US76Atmos
 
-function tempr_(zKm::Float64)
+function tempr_(Body::Type{<:CelestialBody},zKm::Float64)
   #= This function calculates the kinetic temperature for altitudes
    greater than 86 km, according to the US Standard Atmosphere 1976. =#
   if (zKm >= z7us76(Body)) && (zKm < z8us76(Body))
@@ -136,8 +136,8 @@ function tempr_(zKm::Float64)
     return t = tcus76(Body) + taus76(Body)*sqrt(1-(zKm - z8us76(Body))/saus76(Body)*((zKm - z8us76(Body))/saus76(Body)))
   elseif (zKm >= z9us76(Body)) && (zKm < z10us76(Body))
     return t = t9us76(Body) + tlk9us76(Body)*(zKm - z9us76(Body))
-  elseif zkM >= z10us76(Body)
+  elseif zKm >= z10us76(Body)
     zeta = (zKm - z10us76(Body))*(r0us76(Body) + z10us76(Body))/(r0us76(Body) + zKm)
-    return t = tinfus76(Body) - (tinus76(Body) - t10us76(Body))*exp(-rlamus76(Body)*zeta)
+    return t = tinfus76(Body) - (tinfus76(Body) - t10us76(Body))*exp(-rlamus76(Body)*zeta)
   end #if
 end #tempr_

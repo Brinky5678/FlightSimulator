@@ -7,6 +7,7 @@ function J23Gravity(Body::Type{<:CelestialBody}, PosRsph::Vector{Float64})
   muplanet = mu(Body)
   R = PosRsph[1]
   g = zeros(3)
+  sec_a = 0
 
   #Devision by zero check
   cos(α) == 0 ? sec_a = 1e20 : sec_a = 1/cos(α)

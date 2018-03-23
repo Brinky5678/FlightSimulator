@@ -73,7 +73,7 @@ function normalize(q::Quaternion)
     return q
 end
 
-(-)(q::Quaternion) = Quaterion(-q[1], -q[2], -q[3], -q[4], false)
+(-)(q::Quaternion) = Quaternion(-q[1], -q[2], -q[3], -q[4], false)
 (+)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1] + q2[1], q1[2] + q2[2], q1[3] + q2[3], q1[4] + q2[4],false)
 (-)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1] - q2[1], q1[2] - q2[2], q1[3] - q2[3], q1[4] - q2[4],false)
 (*)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1]*q2[1] - dot(vec(q1),vec(q2)),

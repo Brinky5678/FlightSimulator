@@ -1,6 +1,15 @@
 #Collection of utility functions
+include("QuatLib.jl")
 #include("MathUtils.jl")
 
+Secs = 0
+MJD_J2000 = 0
+YEAR = 0
+MONTH = 0
+DAY = 0
+HOUR = 0
+MINUTE = 0
+SECONDS_OF_MINUTE = 0
 
 """
 ```julia
@@ -77,7 +86,7 @@ function MJD(simtime::Float64, Year::Int64 = YEAR, Month::Int64 = MONTH,
 ```julia
 C_R2V(tau::Float64, delta::Float64)
 ```
-Computes the transformation matrix van the R-frame to the V-frame.
+Computes the transformation matrix from the R-frame to the V-frame.
 """
 function C_R2V(tau::Float64, delta::Float64)
   return [[-sin(delta)*cos(tau) -sin(delta)*sin(tau) cos(delta)];
@@ -89,7 +98,7 @@ end
 ```julia
 C_V2R(tau::Float64, delta::Float64)
 ```
-Computes the transformation matrix van the V-frame to the R-frame.
+Computes the transformation matrix from the V-frame to the R-frame.
 """
 function C_V2R(tau::Float64, delta::Float64)
   return [[-sin(delta)*cos(tau) -sin(tau) -cos(delta)*cos(tau)];
@@ -202,7 +211,7 @@ Computes the transformation matrix from the B-frame to the I-frame, using the
 the quaternion describing the same orientation.
 """
 function C_B2I(quatB2I::Vector{Float64})
-  return Quat2DCM(quatB2I)
+  return quat2DCM(quatB2I)
 end
 
 """
@@ -316,6 +325,6 @@ function TransformUtils(state::Vector{Float64}, simt::Float64, ω::Float64 = 0.)
   VV = CR2V*VR
   Vsph = VelocityCart2Sph(VV)
   Angles = AirAttitude(C_B2V(state, GMST), C_V2TA(Vsph[2], Vsph[3]))
-  return PosRsph, C_B2I(state[10:13])*C_AA2B(Angles[1], Angles[2]), transpose(CI2R*CR2V),
+  return PosRSph, C_B2I(state[10:13])*C_AA2B(Angles[1], Angles[2]), transpose(CI2R*CR2V),
             Vsph[1]
 end

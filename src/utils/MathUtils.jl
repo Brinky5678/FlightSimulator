@@ -1,5 +1,6 @@
 #general linear interpolation function. Try to avoid this one if u know the
 # number of interpolation dimensions
+
 function lininterpnvar(x::Array,v::Array,xq::Array)
 
 
@@ -70,7 +71,7 @@ function lininterp2(x::Array,y::Array,v::Array,xq::Number,yq::Number)
     elseif yq >= y[m]
       return v[l,m]
     else
-      return linterp1core(y,v[l,:],yq)
+      return lininterp1core(y,v[l,:],yq)
     end
   else
     if yq <= y[1]
