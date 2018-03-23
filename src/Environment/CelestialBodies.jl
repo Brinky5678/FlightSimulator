@@ -29,7 +29,7 @@ SunType = AstroDynBase.Sun
 MercuryType = PLANETS[1] 
 VenusType = (PLANETS[2])
 EarthType = (PLANETS[3])
-MoonType = (SATELLITES[1])
+LunaType = (SATELLITES[1])
 MarsType = (PLANETS[4])
 JupiterType = (PLANETS[5])
 SaturnType = (PLANETS[6])
@@ -51,8 +51,8 @@ j4(::Type{EarthType}) = -1.61e-6
 
 #Wrap the functions
 naif_id(Planet::T) where {T <: abstractCelestialBody} = naif_id(Planet.Name)
-μ(Planet::T) where {T <: abstractCelestialBody} = μ(Planet.Name)*10^9
-mu(Planet::T) where {T <: abstractCelestialBody} = mu(Planet.Name)*10^9
+μ(Planet::T) where {T <: abstractCelestialBody} = μ(Planet.Name)
+mu(Planet::T) where {T <: abstractCelestialBody} = mu(Planet.Name)
 j2(Planet::T) where {T <: abstractCelestialBody} = j2(Planet.Name)
 mean_radius(Planet::T) where {T <: abstractCelestialBody} = mean_radius(Planet.Name)
 equatorial_radius(Planet::T) where {T <: abstractCelestialBody} = equatorial_radius(Planet.Name)

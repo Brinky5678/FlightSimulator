@@ -13,3 +13,6 @@ include("StarsAndPlanets.jl")
 
 #Load the planetary System type
 include("PlanetarySystem.jl")
+
+#Load GravitationalAccelerations
+include("GravitationalAcceleration.jl")
