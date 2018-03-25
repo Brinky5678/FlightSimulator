@@ -1,5 +1,8 @@
 #This file is simply a small script to load the Utils files/types in the correct order
 
+#import needed libraries
+import Base: norm
+
 #Load Constants
 const SECS = 86400.0
 const MJD_J2000 = 51544.5
@@ -14,4 +17,5 @@ include("MathUtils.jl")
 include("QuatLib.jl")
 
 #Lastly, the Utils
+include("Transformations.jl")
 include("Utils.jl")

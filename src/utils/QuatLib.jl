@@ -28,16 +28,16 @@ function Base.getindex(q::Quaternion, i::Int)
     end
 end
 
-function setindex!(q::Quaternion, v::Float64, i::Int)
+function setindex!(q::Quaternion, v::T, i::Int) where {T <: Real}
     if (i>0 && i<5)
         if (i == 1)
-            q.q1 = v
+            q.q1 = Float64(v)
         elseif i== 2
-            q.q2 = v
+            q.q2 = Float64(v)
         elseif i == 3
-            q.q3 = v
+            q.q3 = Float64(v)
         elseif i == 4
-            q.q4 = v
+            q.q4 = Float64(v)
         end
         q.norm = false
     else
@@ -46,9 +46,9 @@ function setindex!(q::Quaternion, v::Float64, i::Int)
     return q
 end
 
-Quaternion(q1::Float64, qvec::Vector{Float64}, norm=false) = Quaternion(q1, qvec[1], qvec[2], qvec[3], norm)
-Quaternion(qvec::Vector{Float64}) = Quaternion(0., qvec)
-Quaternion(q1::Float64) = Quaternion(q1, Float64(zeros(3)))
+Quaternion(q1::S, qvec::Vector{T}, norm=false) where {T,S <: Real} = Quaternion(Float64(q1), Float64(qvec[1]), Float64(qvec[2]), Float64(qvec[3]), norm)
+Quaternion(qvec::Vector{T}) where {T <: Real} = Quaternion(0., qvec)
+Quaternion(q1::T) where {T <: Real} = Quaternion(Float64(q1), Float64(zeros(3)))
 vec(q::Quaternion) = [[q[2] q[3] q[4]]...]
 scalar(q::Quaternion) = q[1]
 conjugate(q::Quaternion) = Quaternion(scalar(q), [-vec(q)...], isnormalized(q))
@@ -78,10 +78,10 @@ end
 (-)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1] - q2[1], q1[2] - q2[2], q1[3] - q2[3], q1[4] - q2[4],false)
 (*)(q1::Quaternion, q2::Quaternion) = Quaternion(q1[1]*q2[1] - dot(vec(q1),vec(q2)),
     q2[1].*vec(q1) + q1[1].*vec(q2) + cross(vec(q1),vec(q2)),false)
-(/)(q::Quaternion, s::Float64) = Quaternion(q[1]/s, q[2:4]./s, false)
+(/)(q::Quaternion, s::T) where {T <: Real} = Quaternion(q[1]/s, q[2:4]./s, false)
 
 
-angleaxis2quat(angle::Float64, axis::Vector{Float64}) = Quaternion(cos(angle/2), axis.*sin(angle/2),true)
+angleaxis2quat(angle::T, axis::Vector{B}) where {T <: Real, B <: Real} = Quaternion(cos(angle/2), axis.*sin(angle/2),true)
 
 """
 ```julia
@@ -106,7 +106,12 @@ function quat2DCM(q::Quaternion)
   q2q3 = q[2]*q[3]
   q1q4 = q[1]*q[4]
 
-  return [[(q12 + q22 - q32 - q42) 2*(q2q3 - q1q4) 2*(q1q3 + q2q4)];
+  return transpose([[(q12 + q22 - q32 - q42) 2*(q2q3 - q1q4) 2*(q1q3 + q2q4)];
           [2*(q2q3 + q1q4) (q12 - q22 + q32 - q42) 2*(q3q4 - q1q2)];
-          [2*(-q1q3 + q2q4) 2*(q1q2 + q3q4) (q12 - q22 - q32 + q42)]]
+          [2*(-q1q3 + q2q4) 2*(q1q2 + q3q4) (q12 - q22 - q32 + q42)]])
 end
+
+#Helper function for rotation a vector with the Quaternion
+function RotateVector(q::Quaternion, v::Vector{T}) where {T <: Real}
+    return vec(inverse(q)*Quaternion(v)*q)
+end 
