@@ -2,8 +2,6 @@
 # number of interpolation dimensions
 
 function lininterpnvar(x::Array,v::Array,xq::Array)
-
-
   n = length(x)
   if n == 1
     return lininterp1(x[1],v,xq[1])
@@ -18,7 +16,6 @@ function lininterpnvar(x::Array,v::Array,xq::Array)
 end
 
 function lininterpn(varargs...)
-
   n = (length(varargs) - 1)/2
   isinteger(n) ? n = Integer(n) : error("Number of arrays mismatch")
 
@@ -86,7 +83,6 @@ end
 
 function lininterp3(x::Array,y::Array,z::Array,v::Array,xq::Number,yq::Number,
                     zq::Number)
-
   l = length(x)
   m = length(y)
   n = length(z)
@@ -265,14 +261,4 @@ function zerofunc(idx::Int64)
 end
 
 
-##Examples
-#x = [0 pi/4 pi/2 3*pi/4 pi 5*pi/4 6*pi/4 7*pi/4 2*pi]
-#y = x
-#z = y
-#v = sin.(x)
-#v2 = repmat(sin.(x),9,1) + repmat(sin.(y)',1,9)
 
-#vq = lininterpn(x,v,1)
-#vqq = lininterp1(x,v,1)
-#vq2 = lininterpn(x,y,v2,1,1)
-#vqq2 = lininterp2(x,y,v2,1,1)

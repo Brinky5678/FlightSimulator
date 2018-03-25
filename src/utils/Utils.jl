@@ -1,16 +1,4 @@
 #Collection of utility functions
-include("QuatLib.jl")
-#include("MathUtils.jl")
-
-Secs = 0
-MJD_J2000 = 0
-YEAR = 0
-MONTH = 0
-DAY = 0
-HOUR = 0
-MINUTE = 0
-SECONDS_OF_MINUTE = 0
-
 """
 ```julia
   qdyn, M = Calc_Dynamic_Pressure(ρ::Float64, V_VA::Float64, ss::Float64)
@@ -24,63 +12,50 @@ end
 
 """
 ```julia
-calc_GMST(MJD_in::Float64)
+GMST(MJD::T) where {T <: Real}
 ```
 This function computes the Greenwich Mean Sidereal Time and outputs it as an
 angle (0..2pi).
 """
-function calc_GMST(MJD_in::Float64)
-  Mjd_0 = floor(MJD_in)
-  UT1 = Secs*(MJD_in - Mjd_0)
-  T_0 = (Mjd_0 - MJD_J2000)/36525
-  T = (MJD_in - MJD_J2000)/36525
-  temp = (24110.54841 + 8640184.812866*T_0 + 1.002737909350795*UT1
-   + (0.093104-6.2e-6*T)*T^2)/Secs
-   return 0.
-  return 2*pi*(temp - floor(temp))
+function GMST(MJD::T) where {T <: Real}
+  MJD0 = floor(MJD)
+  UT1 = SECS*(MJD - MJD0)
+  T0 = (MJD0 - MJD_J2000) / JULIAN_CENTURY
+  Tval = (MJD - MJD_J2000) / JULIAN_CENTURY  
+  temp = (GMST_CONSTS[1] + GMST_CONSTS[2]*T0 + GMST_CONSTS[3]*Tval^2 - GMST_CONSTS[4]*Tval^3 + GMST_CONSTS[5]*UT1)/SECS
+  return 2pi*(temp - floor(temp))
 end
 
 """
 ```julia
-calc_MJD(Year::Int64, Month::Int64, Day::Int64, Hour::Int64,
-   Min::Int64, Sec::Float64)
+GMST(dt::DateTime, simtime::T = 0.0) where {T <: Real}
 ```
-This function computes the Modified Julian Data from calender date and time.
+This function computes the Greenwich Mean Sidereal Time and outputs it as an
+angle (0..2pi).
 """
-function calc_MJD(Year::Int64, Month::Int64, Day::Int64, Hour::Int64,
-   Min::Int64, Sec::Float64)
+function GMST(dt::DateTime, simtime::T = 0.0) where {T <: Real}
+  return GMST(datetime2modifiedjulian(dt, simtime))
+end 
 
-  if (Month <= 2)
-    Month += 12
-    Year -= 1
-  end
-
-  if (10000*Year + 100*Month + Day) < 15821004.0
-    #Julian Calendar
-    bq = -2 + floor((Year + 4716)/4) - 1179
+"""
+```julia
+datetime2modifiedjulian(dt::DateTime, simtime::Float64 = 0.0)
+```
+This function computes the Modified Julian Data from calender date and (optional) simulation time.
+"""
+function datetime2modifiedjulian(dt::DateTime, simtime::T = 0.0) where {T <: Real}
+  if simtime != 0.0 
+    #Extract seconds and milliseconds from the simulation time
+    simseconds = floor(simtime)
+    simmilliseconds = simtime - simseconds  
+    #Create new DateTime Object
+    dtnew = DateTime(Dates.Year(dt),Dates.Month(dt),Dates.Day(dt), Dates.Hour(dt), Dates.Minute(dt), 
+      Dates.Second(dt) + Dates.Second(simseconds), Dates.Millisecond(dt) + Dates.Millisecond(simmilliseconds))
+    return (Dates.datetime2julian(dtnew) - JD_TO_MJD)
   else
-    #Gregorian Calendar
-    bq = floor(Year/400) - floor(Year/100) + floor(Year/4)
+    return (Dates.datetime2julian(dt) - JD_TO_MJD)
   end
-
-  return 365*Year - 679004 + bq + floor(30.6001*(Month + 1)) + Day +
-    (Hour + Min/60 + Sec/3600)/24
-end
-
-
-"""
-```julia
-MJD(simtime::Float64, Year::Float64 = YEAR, Month::Float64 = MONTH,
-   Day::Float64 = DAY, Hour::Float64 = HOUR, Min::Float64 = MINUTE,
-   Sec::Float64 = SECONDS_OF_MINUTE)
-```
-computes the MJD with a variable time input of simulation time.
-"""
-function MJD(simtime::Float64, Year::Int64 = YEAR, Month::Int64 = MONTH,
-   Day::Int64 = DAY, Hour::Int64 = HOUR, Min::Int64 = MINUTE,
-   Sec::Real = SECONDS_OF_MINUTE)
-   return calc_MJD(Year, Month, Day, Hour, Min, Float64(Sec) + simtime)
- end
+end 
 
 """
 ```julia
@@ -307,6 +282,7 @@ function C_AA2B(α::Float64, β::Float64)
   return transpose(C_B2AA(α,β))
 end
 
+#=
 """
 ```julia
 PosRsph, C_AA2I, C_V2I, V_VA =
@@ -328,3 +304,4 @@ function TransformUtils(state::Vector{Float64}, simt::Float64, ω::Float64 = 0.)
   return PosRSph, C_B2I(state[10:13])*C_AA2B(Angles[1], Angles[2]), transpose(CI2R*CR2V),
             Vsph[1]
 end
+=#

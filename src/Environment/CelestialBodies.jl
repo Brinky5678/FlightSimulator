@@ -1,9 +1,3 @@
-import AstroDynBase: PLANETS, MINORBODIES, SATELLITES, CelestialBody, Barycenter, SSB
-import AstroDynBase: naif_id, μ, mu, j2, mean_radius, equatorial_radius, polar_radius,
-    maximum_elevation, maximum_depression, deviation, parent, show,
-    right_ascension, right_ascension_rate, declination, declination_rate,
-    rotation_angle, rotation_rate, euler_angles, euler_derivatives
-
 #Define abstract planet type that functions as a wrapper of the CelestialBody struct of AstroDynBase
 abstract type abstractCelestialBody end 
 abstract type abstractPlanet <: abstractCelestialBody end 
