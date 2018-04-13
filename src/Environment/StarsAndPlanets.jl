@@ -16,8 +16,8 @@ function Moon(Name::Type{<:CelestialBody})
 end 
 
 #Define Stars and Planetary Bodies with wrapper
-Sun = Star(SunType)
-Mercury = Planet(MercuryType)
+
+
 Venus = Planet(VenusType)
 Earth = Planet(EarthType)
 Luna = Moon(LunaType)

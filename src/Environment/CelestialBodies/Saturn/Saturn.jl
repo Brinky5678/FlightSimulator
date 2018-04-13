@@ -1,0 +1,1 @@
+struct SaturnType <: abstractPlanet end 

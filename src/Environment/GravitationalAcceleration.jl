@@ -16,6 +16,8 @@ function GetGravAccel(sys::PlanetarySystem, Pos::Vector{T}, mjdin::S) where {T,S
             #Because they are vectors, no translation is needed, as the inertial frame of each body is equal to the global inertial frame (in orientation)
             GMST = Get_GMST(mjdin)
             Rsph,lon,lat = PositionCart2Sph(PosCart)
+            warn("The usual I to R frame transformations as defined now only works for the Earth! Not for Anything else!")
+            warn("Use the RA, DEC, and PM angles from the databases to compute a proper transformation matrix from the angles (Z-X-Z) => (RA, DEC, PM)")
             qv2i = Q_V2I(GMST,lon,lat)
             g += RotateVector(qv2i, glocalv)
         end

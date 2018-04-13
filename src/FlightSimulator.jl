@@ -6,17 +6,17 @@ import JPLEphemeris: SPK, print_segments, Dates, position, velocity, state
 import AstronomicalTime: TAI, TT, UTC, UT1, TCG, TCB, TDB, Epoch
 using DifferentialEquations
 
-export Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Neptune, Uranus, Pluto
+export Mercury, Venus, Earth, Luna, Mars, Jupiter, Saturn, Neptune, Uranus, Pluto
 
 #include global Dictionaries
-include("utils\\GlobalDictionaries.jl")
+include("solver\\GlobalDictionaries.jl")
 
 #Include utility functions
 include("utils\\MathUtils.jl")
 include("utils\\Utils.jl")
 
 #Include base function first
-include("Environment\\FlightSimBase.jl")
+include("Environment\\LoadEnvironment.jl")
 
 #simulator Options
 include("solver\\SimulationOptions.jl")

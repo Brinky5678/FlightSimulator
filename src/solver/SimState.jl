@@ -1,6 +1,6 @@
 #Define Simulation state that also contains the control variables using the DEDataVector
 #interface from the DifferentialEquations package
-using DifferentialEquations
+import DifferentialEquations: ODEProblem
 
 mutable struct SimState{Float64} <: DEDataVector{Float64}
     x::Vector{Float64} #State variables

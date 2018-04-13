@@ -18,7 +18,7 @@ StandardPos = [-6378.0, 0.0, 0.0]
 scpos = GetInertialFramePos(StandardSystem, Earth, StandardPos, mjd)
 
 TimeVector = Vector{Float64}()
-for idx = 1:1000
+for idx = 1:10000
     tic()
     g = GetGravAccel(StandardSystem, scpos, mjd)
     time = toq() 

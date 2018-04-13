@@ -113,5 +113,23 @@ end
 
 #Helper function for rotation a vector with the Quaternion
 function RotateVector(q::Quaternion, v::Vector{T}) where {T <: Real}
-    return vec(inverse(q)*Quaternion(v)*q)
-end 
+
+  if norm(q) < eps()
+    q = Quaternion(1., zeros(3))
+  end
+
+  q12 = q[1]^2
+  q22 = q[2]^2
+  q32 = q[3]^2
+  q42 = q[4]^2
+  q1q2 = q[1]*q[2]
+  q3q4 = q[3]*q[4]
+  q1q3 = q[1]*q[3]
+  q2q4 = q[2]*q[4]
+  q2q3 = q[2]*q[3]
+  q1q4 = q[1]*q[4]
+
+  return [(q12 + q22 - q32 - q42)*v[1] + 2*(q2q3 + q1q4)*v[2] + 2*(-q1q3 + q2q4)v[3],
+                2*(q2q3 - q1q4)*v[1] + (q12 - q22 + q32 - q42)*v[2] +  2*(q1q2 + q3q4)*v[3],
+                2*(q1q3 + q2q4)*v[1] + 2*(q3q4 - q1q2)*v[2] + (q12 - q22 - q32 + q42)*v[3]]
+end

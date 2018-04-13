@@ -1,6 +1,6 @@
 include("..\\Vehicle\\Spacecraft.jl")
-include("..\\utils\\GlobalDictionaries.jl")
-include("..\\Environment\\Environment.jl")
+include("..\\solver\\GlobalDictionaries.jl")
+include("..\\Environment\\LoadEnvironment.jl")
 include("SimulationOptions.jl")
 include("Propagator.jl")
 import DifferentialEquations: solve, ODEProblem 

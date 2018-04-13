@@ -1,4 +1,13 @@
 #Collection of utility functions
+
+#Load Constants
+const SECS = 86400.0
+const MJD_J2000 = 51544.5
+const JULIAN_CENTURY = 36525
+const GMST_CONSTS = (24110.54841, 8640184.812866, 0.093104, 6.2e-6, 1.002737909350795)
+const JD_TO_MJD = 2400000.5
+const SECONDS_PER_CENTURY = SECS*JULIAN_CENTURY
+
 """
 ```julia
   qdyn, M = Get_Dynamic_Pressure(ρ::T, V_VA::S, ss::P) where {T,S,P <: Real}
@@ -44,17 +53,11 @@ datetime2modifiedjulian(dt::DateTime, simtime::Float64 = 0.0)
 This function computes the Modified Julian Data from calender date and (optional) simulation time.
 """
 function datetime2modifiedjulian(dt::DateTime, simtime::T = 0.0) where {T <: Real}
-  if simtime != 0.0 
-    #Extract seconds and milliseconds from the simulation time
-    simseconds = floor(simtime)
-    simmilliseconds = simtime - simseconds  
-    #Create new DateTime Object
-    dtnew = DateTime(Dates.Year(dt),Dates.Month(dt),Dates.Day(dt), Dates.Hour(dt), Dates.Minute(dt), 
-      Dates.Second(dt) + Dates.Second(simseconds), Dates.Millisecond(dt) + Dates.Millisecond(simmilliseconds))
-    return (Dates.datetime2julian(dtnew) - JD_TO_MJD)
-  else
-    return (Dates.datetime2julian(dt) - JD_TO_MJD)
-  end
+  return (Dates.datetime2julian(dt) - JD_TO_MJD + simtime/SECS)
+end 
+
+function centuriespastJ2000(dt:DateTime, simtime::T = 0.0) where {T <: Real} 
+  return (datetime2modifiedjulian(dt,simtime) - MJD_J2000)/JULIAN_CENTURY
 end 
 
 """
@@ -115,3 +118,22 @@ function AirVelocity(VG_NED::Vector{T}, VW_NED::Vector{S} = [0,0,0]) where {T,S 
   return [VA, γ_a, χ_a], Q_V2TA(γ_a, χ_a)
 end
 
+"""
+```julia
+VelocityI2R(VelI::Vector{T}, PosI::Vector{P}, ω::S, QI2R::Quaternion) where {T,P,S <: Real}
+```
+Computes the velocity vector in the R-frame from the I-frame.
+"""
+function VelocityI2R(VelI::Vector{T}, PosI::Vector{P}, ω::S, QI2R::Quaternion) where {T,P,S <: Real}
+  return RotateVector(QI2R,(VelI + [ω*PosI[2], -ω*PosI[1], 0]))
+end
+
+"""
+```julia
+PosR = PositionI2R(PosI::Vector{Float64}, CI2R::Array{Float64}(3,3))
+```
+Computes the position vector in the R-frame from the I-frame.
+"""
+function PositionI2R(PosI::Vector{Float64}, QI2R::Quaternion)
+  return RotateVector(QI2R, PosI)
+end

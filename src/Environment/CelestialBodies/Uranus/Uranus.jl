@@ -1,0 +1,1 @@
+struct UranusType <: abstractPlanet end 

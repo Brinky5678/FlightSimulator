@@ -59,3 +59,20 @@ Computes the transformation Quaternion from the I-frame to the V-frame.
 function Q_I2V(theta::T, tau::B, delta::C) where {T,B,C <: Real}
     return inverse(Q_V2I(theta,tau,delta))
 end 
+
+
+warn("The Q_V2B transformation has to be redone with the correct simulation state vector")
+"""
+```julia
+Q_V2B(VehState::Vector{Float64}, GMST::Float64)
+```
+Computes the transformation matrix from the V-frame to the B-frame, using the
+vehicle state and the GMST as inputs.
+"""
+#=
+function Q_V2B(VehState::Vector{T}, GMST::S) where {T,S <: Real}
+  QI2R = Q_I2R(GMST)
+  PosSph = PositionCart2Sph(QI2R*VehState[4:6])
+  return inverse(Quaternion(VehState[10],VehState[11:13]))*(QI2R*Q_R2V(PosSph[2], PosSph[3])))
+end
+=#
