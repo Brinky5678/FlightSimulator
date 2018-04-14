@@ -7,23 +7,10 @@ function PlanetEnvironment(gravfunc::Function, planetfunc::Function, atmospheref
 end
 
 #Define Constructor for Planet and Moon Types
-function Planet(Name::Type{<:CelestialBody})
+function Planet(Name::Type{<:abstractCelestialBody})
     return Planet(Name, PlanetEnvironment())
 end 
 
-function Moon(Name::Type{<:CelestialBody})
+function Moon(Name::Type{<:abstractCelestialBody})
     return Moon(Name, PlanetEnvironment())
 end 
-
-#Define Stars and Planetary Bodies with wrapper
-
-
-Venus = Planet(VenusType)
-Earth = Planet(EarthType)
-Luna = Moon(LunaType)
-Mars = Planet(MarsType)
-Jupiter = Planet(JupiterType)
-Saturn = Planet(SaturnType)
-Uranus = Planet(UranusType)
-Neptune = Planet(NeptuneType)
-Pluto = Planet(PlutoType)

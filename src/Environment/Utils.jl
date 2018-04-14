@@ -56,7 +56,7 @@ function datetime2modifiedjulian(dt::DateTime, simtime::T = 0.0) where {T <: Rea
   return (Dates.datetime2julian(dt) - JD_TO_MJD + simtime/SECS)
 end 
 
-function centuriespastJ2000(dt:DateTime, simtime::T = 0.0) where {T <: Real} 
+function centuriespastJ2000(dt::DateTime, simtime::T = 0.0) where {T <: Real} 
   return (datetime2modifiedjulian(dt,simtime) - MJD_J2000)/JULIAN_CENTURY
 end 
 

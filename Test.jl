@@ -13,14 +13,14 @@ end
 
 
 # Load the DE430 SPK kernel
-spk = SPK("D:\\de430.bsp")
+spk = SPK("D:\\EphemerisData\\cg_1950_2050_v01.bsp")
 
 # List the available segments
 print_segments(spk)
 
 
 # 2016-01-01T00:00 in Julian days
-jd = Dates.datetime2julian(DateTime(2016,1,1,0,0,0))
+jd = Dates.datetime2julian(DateTime(2000,1,1,12,0,0))
 
 # Position of Earth's barycenter w.r.t. the Solar System's barycenter at 2016-01-01T00:00
 # [km]
@@ -35,6 +35,11 @@ vel = velocity(spk, "earth barycenter", "earth", jd)
 st0 = state(spk, 0, 3, jd)
 st = state(spk, 0, 3, jd, 1.0)
 st1 = state(spk, 0, 3, jd:jd+100)
+
+st3 = state(spk, 3, 399, jd)
+println(st3)
+st4 = state(spk, 3, 301, jd)
+println(st4)
 
 # Two-part Julian dates (day number and fraction) can be used for higher precision.
 # For example for 2016-01-01T12:00:
