@@ -11,6 +11,6 @@ function Planet(Name::Type{<:abstractCelestialBody})
     return Planet(Name, PlanetEnvironment())
 end 
 
-function Moon(Name::Type{<:abstractCelestialBody})
-    return Moon(Name, PlanetEnvironment())
+function NaturalSatellite(Name::Type{<:abstractCelestialBody})
+    return NaturalSatellite(Name, PlanetEnvironment())
 end 

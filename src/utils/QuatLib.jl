@@ -1,6 +1,6 @@
 #A Small utility library for Quaternions and their functions
 import Base.size, Base.getindex, Base.setindex!, Base.IndexStyle
-import Base.*, Base.+, Base.-, Base./
+import Base.*, Base.+, Base.-, Base./, Base.norm
 
 mutable struct Quaternion <: AbstractArray{Float64,1}
     q1::Float64 #<- scalar part

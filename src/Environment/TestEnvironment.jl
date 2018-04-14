@@ -5,22 +5,23 @@ include("LoadEnvironment.jl")
 #Load Utils seperately for testing (normally loaded first from FlightSimulator Module)
 include("..\\utils\\LoadUtils.jl")
 
-#load DE430 SPK kernal
-spk = SPK("D:\\de430.bsp")
+#Load Kernels
+LoadKernels("D:\\EphemerisData\\cg_1950_2050_v01.bsp")
+LoadKernels("D:\\EphemerisData\\pck00010.tpc")
 
-# 2016-01-01T00:00 in Modified Julian days
-mjd = datetime2modifiedjulian(DateTime(2016,1,1,0,0,0))
+#Set time after J2000
+ep = 0.0
 
 #Define a standard system
-ListOfBodies = [Earth, Luna]
+ListOfBodies = [Earth, Moon]
 StandardSystem = PlanetarySystem(ListOfBodies)
-StandardPos = [-6378.0, 0.0, 0.0]
-scpos = GetInertialFramePos(StandardSystem, Earth, StandardPos, mjd)
+StandardPos = [6378.0, 0.0, 0.0]
+scpos = GetInertialFramePos(StandardSystem, Earth, StandardPos, ep)
 
 TimeVector = Vector{Float64}()
 for idx = 1:10000
     tic()
-    g = GetGravAccel(StandardSystem, scpos, mjd)
+    g = GetGravAccel(StandardSystem, scpos, ep)
     time = toq() 
     push!(TimeVector, time)
 end 
@@ -28,10 +29,9 @@ println("Average Time it took to calculate the gravitational forces of the stand
 
 #Perform tests
 @testset "Environment Tests" begin 
-    @test round(mjd*10)/10 == 57388.0
-    @test parent(Earth) == parent(Luna)
+    @test parent(Earth) == parent(Moon)
     @test round.(Earth.Environment.GravityModel(Earth, [6378.0, 0.0, 0.0])*100000000)/100000 == [0.0, 0.0, 9.79871]
     @test PlanetarySystem(ListOfBodies) == StandardSystem
-    @test StandardSystem.InertialFrame_ID == 3
-    @test round.(GetGravAccel(StandardSystem, scpos, mjd)*100000000)/100000 == [-1.71685, 9.6471, 0.0]
+    @test StandardSystem.InertialFrame_Body == EarthMoonBarycenter
+    @test round.(GetGravAccel(StandardSystem, scpos, ep)*100000000)/100000 == [-1.72622, -9.64544, -1.0e-5]
 end

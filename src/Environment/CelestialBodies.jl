@@ -49,14 +49,26 @@ frame(Planet::T) where {T <: abstractCelestialBody} = frame(Planet.Name)
 flattening(Body::T) where {T <: abstractCelestialBody} = 1 - (polar_radius(Body) / equatorial_radius(Body))
 
 #Helper state-transformation matrix function 
-function BodyFixed2Inertial(Body::T, t::S) where {T <: abstractCelestialBody, S <: Real} 
+function BodyFixed2InertialState(Body::T, t::S) where {T <: abstractCelestialBody, S <: Real} 
     sxform(frame(Body),"J2000",Float64(t))
 end 
 
-function Inertial2BodyFixed(Body::T, t::S) where {T <: abstractCelestialBody, S <: Real} 
+function Inertial2BodyFixedState(Body::T, t::S) where {T <: abstractCelestialBody, S <: Real} 
     sxform("J2000",frame(Body),Float64(t))
 end 
 
+function BodyFixed2Inertial3(Body::T, t::S) where {T <: abstractCelestialBody, S <: Real} 
+    pxform(frame(Body),"J2000",Float64(t))
+end 
+
+function Inertial2BodyFixed3(Body::T, t::S) where {T <: abstractCelestialBody, S <: Real} 
+    pxform("J2000",frame(Body),Float64(t))
+end 
+
 function CelestialBodyState(FromBody::T, ToBody::P, t::S) where {T,P <: abstractCelestialBody, S <: Real} 
-    spkezr(naif_id(FromBody), t, "J2000", naif_id(ToBody))
+    spkezr(naif_id(FromBody), Float64(t), "J2000", naif_id(ToBody))[1]
+end 
+
+function CelestialBodyPosition(FromBody::T, ToBody::P, t::S) where {T,P <: abstractCelestialBody, S <: Real} 
+    spkpos(naif_id(FromBody), Float64(t), "J2000", naif_id(ToBody))[1]
 end 

@@ -1,7 +1,7 @@
 #This file is simply a small script to load the enviroment files/types in the correct order
 
 #import needed external libraries
-import SPICE: furnsh, sxform, spkezr
+import SPICE: furnsh, pxform, sxform, spkezr, spkpos
 
 #Load Kernels function
 LoadKernels(kernels) = furnsh(kernels)
