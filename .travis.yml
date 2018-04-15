@@ -11,6 +11,8 @@ matrix:
     - julia: nightly 
 notifications:
   email: false 
+before_script:
+  - julie -e 'Pkg.clone("https://github.com/Brinky5678/SPICE.jl.git", "SPICE"); Pkg.checkout("SPICE", "Fixing-Deprecations")'
 after_success:
   - julia -e 'cd(Pkg.dir("FlightSimulator")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
   - julia -e 'cd(Pkg.dir("FlightSimulator")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
