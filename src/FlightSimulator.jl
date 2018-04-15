@@ -1,9 +1,6 @@
 module FlightSimulator
 
 
-#using JPLEphemeris
-import JPLEphemeris: SPK, print_segments, Dates, position, velocity, state
-import AstronomicalTime: TAI, TT, UTC, UT1, TCG, TCB, TDB, Epoch
 using DifferentialEquations
 
 export Mercury, Venus, Earth, Luna, Mars, Jupiter, Saturn, Neptune, Uranus, Pluto

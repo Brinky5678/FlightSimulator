@@ -1,4 +1,3 @@
-import AstroDynBase
 #Define Mercury type and object
 struct MercuryType <: abstractPlanet end 
 Mercury = Planet(MercuryType)
