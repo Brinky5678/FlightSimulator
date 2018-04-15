@@ -1,4 +1,4 @@
-import DifferentialEquations: ContinousCallBack, ODEProblem, solve, Tsit5
+using DifferentialEquations
 using ParameterizedFunctions
 using PyPlot
 
@@ -40,4 +40,4 @@ for x in sol.u
   idx += 1
 end
 
-plot(sol.t, v)
+#plot(sol.t, v)

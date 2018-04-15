@@ -1,0 +1,1 @@
+struct MarsType <: abstractPlanet end 
