@@ -5,9 +5,9 @@ abstract type abstractPlanetarySystem end
 # some validation is included to determine no unphysical combinations are selected! (only the Sun and the Moon, for example)
 struct PlanetarySystem <: abstractPlanetarySystem 
     Bodies::Vector{T} where {T <: abstractCelestialBody}
-    StarsSelected::Int64 
-    PlanetsSelected::Int64
-    MoonsSelected::Int64
+    StarsSelected::Int
+    PlanetsSelected::Int
+    MoonsSelected::Int
     InertialFrame_Body::Type{<:abstractCelestialBody} 
 
     #Define constructor and validate entries
@@ -104,8 +104,8 @@ function SystemValidation(Bodies::Vector{T}) where {T <: abstractCelestialBody}
 end #Function TwoPlanetsWithoutSunSelected
 
 #Determine inertial reference frame from the list of Bodies
-function GetInertialFrame(Bodies::Vector{T}, StarsSelected::Int64 ,PlanetsSelected::Int64, 
-        MoonsSelected::Int64) where {T <: abstractCelestialBody}
+function GetInertialFrame(Bodies::Vector{T}, StarsSelected::Int ,PlanetsSelected::Int, 
+        MoonsSelected::Int) where {T <: abstractCelestialBody}
     if StarsSelected == 1 
         return SSB
     else 
