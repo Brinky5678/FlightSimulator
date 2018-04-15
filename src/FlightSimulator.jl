@@ -14,10 +14,10 @@ export PlanetarySystem, GetInertialFramePos, GetGravAccel, LoadKernels, naif_id,
 #include("solver\\GlobalDictionaries.jl")
 
 #Include utility functions
-include("utils\\LoadUtils.jl")
+include("utils/LoadUtils.jl")
 
 #Include base function first
-include("Environment\\LoadEnvironment.jl")
+include("Environment/LoadEnvironment.jl")
 
 #simulator Options
 #include("solver\\SimulationOptions.jl")
