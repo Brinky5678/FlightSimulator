@@ -8,7 +8,6 @@ mu(::Type{SunType}) = 1.32712440041e11
 mean_radius(::Type{SunType}) = 696000.0
 polar_radius(::Type{SunType}) = 696000.0
 equatorial_radius(::Type{SunType}) = 696000.0
-naif_id(::Type{SunType}) = 10
 parent(::Type{SunType}) = SSB
 
 #Extra data

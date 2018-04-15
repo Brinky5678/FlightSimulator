@@ -1,58 +1,45 @@
 module FlightSimulator
 
 
-using DifferentialEquations
+#using DifferentialEquations
 
-export Mercury, Venus, Earth, Luna, Mars, Jupiter, Saturn, Neptune, Uranus, Pluto
+export SSB, MercuryBarycenter, VenusBarycenter, EarthMoonBarycenter, MarsBarycenter, JupiterBarycenter
+export SaturnBarycenter, NeptuneBarycenter, UranusBarycenter, PlutoBarycenter
+export Sun, Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Neptune, Uranus, Pluto
+export SunType, MercuryType, VenusType, EarthType, MoonType, MarsType, JupiterType, SaturnType, NeptuneType, UranusType, PlutoType
+export abstractCelestialBody
+export PlanetarySystem, GetInertialFramePos, GetGravAccel, LoadKernels, naif_id, parent
 
 #include global Dictionaries
-include("solver\\GlobalDictionaries.jl")
+#include("solver\\GlobalDictionaries.jl")
 
 #Include utility functions
-include("utils\\MathUtils.jl")
-include("utils\\Utils.jl")
+include("utils\\LoadUtils.jl")
 
 #Include base function first
 include("Environment\\LoadEnvironment.jl")
 
 #simulator Options
-include("solver\\SimulationOptions.jl")
+#include("solver\\SimulationOptions.jl")
 
 #Model Properties Type
 #include("ModelOptions.jl")
 
-#Define the environment models that are included by default
-include("Environment\\EnvironmentModels\\GravityModels\\CentralGravity.jl")
-
-include("Environment\\EnvironmentModels\\GravityModels\\J2Gravity.jl")
-
-include("Environment\\EnvironmentModels\\GravityModels\\J23Gravity.jl")
-
-include("Environment\\EnvironmentModels\\GravityModels\\J234Gravity.jl")
-
-include("Environment\\EnvironmentModels\\PlanetModels\\SphericalPlanet.jl")
-
-include("Environment\\EnvironmentModels\\PlanetModels\\EllipsoidPlanet.jl")
-
-include("Environment\\EnvironmentModels\\AtmosphereModels\\ExpoAtmos.jl")
-
-include("Environment\\EnvironmentModels\\AtmosphereModels\\US76Atmos.jl")
-
 #Include the Aerodynamic database files
-include("Vehicle\\AeroDataBase.jl")
-include("Vehicle\\VehicleAeroDataBase.jl")
+#include("Vehicle\\AeroDataBase.jl")
+#include("Vehicle\\VehicleAeroDataBase.jl")
 
 #Add Planets
 #include("Planets.jl")
 
 #Add Spacecrafts
-include("Vehicle\\Spacecraft.jl")
+#include("Vehicle\\Spacecraft.jl")
 
 #Add Nozzle
-include("Vehicle\\Nozzle.jl")
+#include("Vehicle\\Nozzle.jl")
 
 #Add Actuators
-include("Vehicle\\Actuators.jl")
+#include("Vehicle\\Actuators.jl")
 
 #include run simulation ability
 #include("RunSimulation.jl")
