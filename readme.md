@@ -1,6 +1,6 @@
 # An extensible spaceflight simulator in Julia
 
-[![Build Status Unix][travis-badge]][travis-url] [![Coveralls][coveralls-badge]][coveralls-url] [![Codecov][codecov-badge]][codecov-url]
+[![Build Status Unix][travis-badge]][travis-url][![Build Status Windows][av-badge]][av-url] [![Coveralls][coveralls-badge]][coveralls-url] [![Codecov][codecov-badge]][codecov-url]
 
   The goal of this project is to create a foundation for trajectory and vehicle
   performance analysis based on detailed numerical simulations, modelling the numerous
@@ -94,6 +94,8 @@ Features that will be included are;
 
 [travis-badge]: https://travis-ci.org/Brinky5678/FlightSimulator.svg?branch=master
 [travis-url]: https://travis-ci.org/Brinky5678/FlightSimulator
+[av-badge]: https://ci.appveyor.com/api/projects/status/freb0c18tjbpiwy9?svg=true
+[av-url]: https://ci.appveyor.com/project/Brinky5678/flightsimulator
 [coveralls-badge]: https://coveralls.io/repos/github/Brinky5678/FlightSimulator/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/Brinky5678/FlightSimulator?branch=master
 [codecov-badge]: http://codecov.io/github/Brinky5678/FlightSimulator/coverage.svg?branch=master
