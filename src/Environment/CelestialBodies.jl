@@ -20,9 +20,9 @@ struct Star <: abstractStar
 end 
 
 #Unless otherwise defined, define initial values for each of the variables
-j2(::Type{C}) where {C <: abstractCelestialBody} = 0.
-j3(::Type{C}) where {C <: abstractCelestialBody} = 0.
-j4(::Type{C}) where {C <: abstractCelestialBody} = 0.
+J2(::Type{C}) where {C <: abstractCelestialBody} = 0.
+J3(::Type{C}) where {C <: abstractCelestialBody} = 0.
+J4(::Type{C}) where {C <: abstractCelestialBody} = 0.
 frame(::Type{C}) where {C <: abstractCelestialBody} = "J2000"
 
 #Wrap the functions
@@ -40,9 +40,9 @@ rotation_angle(Planet::T) where {T <: abstractCelestialBody} = rotation_angle(Pl
 rotation_rate(Planet::T) where {T <: abstractCelestialBody} = rotation_rate(Planet.Name)
 euler_angles(Planet::T) where {T <: abstractCelestialBody} = euler_angles(Planet.Name)
 euler_derivatives(Planet::T) where {T <: abstractCelestialBody} = euler_derivatives(Planet.Name)
-j2(Planet::T) where {T <: abstractCelestialBody} = j2(Planet.Name)
-j3(Planet::T) where {T <: abstractCelestialBody} = j3(Planet.Name)
-j4(Planet::T) where {T <: abstractCelestialBody} = j4(Planet.Name)
+J2(Planet::T) where {T <: abstractCelestialBody} = j2(Planet.Name)
+J3(Planet::T) where {T <: abstractCelestialBody} = j3(Planet.Name)
+J4(Planet::T) where {T <: abstractCelestialBody} = j4(Planet.Name)
 frame(Planet::T) where {T <: abstractCelestialBody} = frame(Planet.Name)
 
 #Compute the flattening of a CelestialBody

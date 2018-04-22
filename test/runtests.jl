@@ -17,9 +17,14 @@ if !isfile("$path/pck00010.tpc")
     download("https://naif.jpl.nasa.gov/pub/naif/pds/data/lro-l-spice-6-v1.0/lrosp_1000/data/pck/pck00010.tpc", "$path/pck00010.tpc")
 end 
 
+if !isfile("$path/naif0012.tls")
+    download("https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls", "$path/naif0012.tls")
+end
+
 #Load Kernels
 LoadKernels("$path/de430.bsp")
 LoadKernels("$path/pck00010.tpc")
+LoadKernels("$path/naif0012.tls")
 
 #Set time after J2000
 ep = 0.0

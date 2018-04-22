@@ -1,0 +1,399 @@
+KPL/PCK
+
+\begintext
+
+Mercury:
+
+      \begindata
+
+      BODY1_J2   = 6.0D-5
+      BODY199_J2 = 6.0D-5
+
+\begintext 
+
+Venus: 
+
+      \begindata
+
+      BODY2_J2   =    4.441139399E-06
+      BODY2_J3   =   -2.071395599E-06
+      BODY2_J4   =   -2.160986924E-06
+      BODY299_J2 =    4.441139399E-06
+      BODY299_J3 =   -2.071395599E-06
+      BODY299_J4 =   -2.160986924E-06
+
+
+\begintext
+
+Earth: 
+
+      \begindata 
+
+      BODY399_J2 =    1.082616D-3
+      BODY399_J3 =   -2.53881D-6
+      BODY399_J4 =   -1.65597D-6
+
+\begintext
+
+Mars :
+
+      \begindata 
+
+      BODY4_J2   =    1.964D-3
+      BODY4_J3   =    3.6D-5
+      BODY499_J2 =    1.964D-3
+      BODY499_J3 =    3.6D-5
+
+\begintext 
+
+Jupiter: 
+
+      \begindata 
+
+      BODY599_J2 =    1.475D-2
+      BODY599_J4 =   -5.8D-4
+
+\begintext
+
+Saturn: 
+
+      \begindata 
+
+      BODY699_J2 =    1.645D-2
+      BODY699_J4 =   -1.0D-3
+
+\begintext 
+
+Uranus: 
+
+      \begindata
+
+      BODY799_J2 =    1.2D-2
+
+
+\begintext
+
+Neptune: 
+
+      \begindata 
+
+      BODY899_J2 =    4.0D-3
+
+\begintext
+
+Moon: 
+      \begindata
+
+      BODY301_J2 = 2.024D-4
+
+\begintext
+
+GM values of bodies
+--------------------------------------------------------
+
+     The GM values given below are stated with high precision to avoid
+     loss of significance due to finite precision arithmetic; the actual
+     number of significant digits in these values is generally much lower
+     than the number of digits shown.  For planetary systems, the ratio of
+     the Sun's GM to the system's GM is stated using only significant digits;
+     the same is true for the ratios of satellite GMs to the GMs of the
+     corresponding planets.
+   
+
+The Astronomical Unit
+
+     The value of k and the relation between k and the GM of the
+     Sun are from the ``Explanatory Supplement to the
+     Astronomical Almanac,'' 1992.  P. 696.
+
+     The astronomical unit AU is given in kilometers.
+
+     \begindata
+
+     AU                  =  (      149597870.7           )
+
+     \begintext
+   
+     The GM of the Sun was derived from the formula
+   
+                   3  2    2
+        GM    =  AU  k  / D
+          Sun
+        
+     where k is the Gaussian gravitational constant
+   
+        0.01720209895
+      
+     D is 86400 ephemeris seconds, and AU is given in units of
+     kilometers.
+   
+ 
+      
+The Sun
+      
+     \begindata
+
+     BODY10_GM           =  (   132712440041.94           )
+
+     \begintext
+ 
+    
+
+Mercury
+
+     Sun GM / Mercury system GM  =  6023600.
+   
+     BODY1_GM/PRIMARY    =  (    0.16601367952719300D-06  )
+   
+    \begindata
+   
+     BODY1_GM            =  (          22032.08049039435  )
+     BODY199_GM          =  (          22032.08049039435  )
+
+     \begintext
+
+    
+
+Venus
+
+     Sun GM / Venus system GM  =  408523.7
+   
+     BODY2_GM/PRIMARY    =  (   0.24478383995836710D-05   )
+   
+     \begindata
+   
+     BODY2_GM            =  (         324858.6068371049   )
+     BODY299_GM          =  (         324858.6068371049   )
+
+     \begintext
+
+
+
+The Earth-Moon System
+   
+     Sun GM / Earth system GM  =  328900.56
+   
+     BODY3_GM/PRIMARY    =  (         0.30404326462685300D-05   )
+     BODY301_GM/PRIMARY  =  (  12150580.D-9                     )
+   
+     \begindata
+   
+     BODY3_GM            =  (         403503.2352694668   )
+     BODY301_GM          =  (           4843.941639988467 )
+     BODY399_GM          =  (         398659.29362947830  )
+
+     \begintext
+
+   
+
+The Martian System
+
+     Sun GM / Mars system GM  =  3098708.
+   
+     BODY4_GM/PRIMARY    =  (              0.32271514450538740D-06 )
+     BODY401_GM/PRIMARY  =  (             19.9D-9                  )
+     BODY402_GM/PRIMARY  =  (             28.0D-10                 )
+   
+
+     The GM of Phobos given in Jacobson's report is slightly off;
+     the correct value has been computed from the GM/primary
+     ratio and the GM of Mars.
+   
+     \begindata
+   
+     BODY4_GM            =  (          42828.31426579703       )
+     BODY401_GM          =  (             85.22834344572990D-5 )
+     BODY402_GM          =  (            119.9192772100721D-6  )
+     BODY499_GM          =  (          42828.313289311500      )
+
+     \begintext
+
+
+The Jovian System
+
+     Sun GM / Jupiter system GM  =  1047.3486
+   
+     BODY5_GM/PRIMARY    =  (               0.95479193842432210D-03  )
+     BODY501_GM/PRIMARY  =  (            4705.3D-8                   )
+     BODY502_GM/PRIMARY  =  (            2526.7D-8                   )
+     BODY503_GM/PRIMARY  =  (            7804.3D-8                   )
+     BODY504_GM/PRIMARY  =  (            5668.3D-8                   )
+     BODY505_GM/PRIMARY  =  (               4.D-9                    )
+     BODY506_GM/PRIMARY  =  (               4.D-9                    )
+     BODY507_GM/PRIMARY  =  (               3.D-10                   )
+     BODY508_GM/PRIMARY  =  (               9.D-11                   )
+     BODY509_GM/PRIMARY  =  (               3.D-11                   )
+     BODY510_GM/PRIMARY  =  (               3.D-11                   )
+     BODY511_GM/PRIMARY  =  (               5.D-11                   )
+     BODY512_GM/PRIMARY  =  (               2.D-11                   )
+     BODY513_GM/PRIMARY  =  (               2.D-12                   )
+     BODY514_GM/PRIMARY  =  (               8.D-10                   )
+     BODY515_GM/PRIMARY  =  (               7.D-12                   )
+     BODY516_GM/PRIMARY  =  (               5.D-11                   )
+   
+     \begindata
+   
+     BODY5_GM            =  (       126712767.8806649            )
+     BODY501_GM          =  (            5960.981613781674       )
+     BODY502_GM          =  (            3200.988724107317       )
+     BODY503_GM          =  (            9886.997387719448       )
+     BODY504_GM          =  (            7180.972962701350       )
+     BODY505_GM          =  (               5.067461470071345D-1 )
+     BODY506_GM          =  (               5.067461470071345D-1 )
+     BODY507_GM          =  (               3.800596102553509D-2 )
+     BODY508_GM          =  (              11.40178830766053D-3  )
+     BODY509_GM          =  (               3.800596102553508D-3 )
+     BODY510_GM          =  (               3.800596102553508D-3 )
+     BODY511_GM          =  (               6.334326837589181D-3 )
+     BODY512_GM          =  (               2.533730735035672D-3 )
+     BODY513_GM          =  (               2.533730735035672D-4 )
+     BODY514_GM          =  (              10.13492294014269D-2  )
+     BODY515_GM          =  (               8.868057572624853D-4 )
+     BODY516_GM          =  (               6.334326837589181D-3 )
+     BODY599_GM          =  (       126686536.75178400           )
+
+     \begintext
+
+
+The Saturnian System
+
+
+     Sun GM / Saturn system GM  =  3497.90
+
+     BODY6_GM/PRIMARY    =  (               0.28588581720460840D-03  )
+     BODY601_GM/PRIMARY  =  (              65.0D-9                   )
+     BODY602_GM/PRIMARY  =  (              21.0D-8                   )
+     BODY603_GM/PRIMARY  =  (             108.5D-8                   )
+     BODY604_GM/PRIMARY  =  (             190.0D-8                   )
+     BODY605_GM/PRIMARY  =  (              40.6D-7                   )
+     BODY606_GM/PRIMARY  =  (           23669.6D-8                   )
+     BODY607_GM/PRIMARY  =  (               5.D-8                    )
+     BODY608_GM/PRIMARY  =  (              27.9D-7                   )
+     BODY609_GM/PRIMARY  =  (              24.D-9                    )
+     BODY610_GM/PRIMARY  =  (              35.6D-10                  )
+     BODY611_GM/PRIMARY  =  (              98.9D-11                  )
+     BODY612_GM/PRIMARY  =  (               3.D-11                   )
+     BODY613_GM/PRIMARY  =  (              10.D-12                   )
+     BODY614_GM/PRIMARY  =  (               7.D-12                   )
+     BODY615_GM/PRIMARY  =  (               3.D-11                   )
+     BODY616_GM/PRIMARY  =  (               9.D-10                   )
+     BODY617_GM/PRIMARY  =  (               6.D-10                   )
+     BODY618_GM/PRIMARY  =  (               7.5D-12                  )
+   
+     \begindata
+   
+     BODY6_GM            =  (        37940604.37460744           )
+     BODY601_GM          =  (               2.465530579037799    )
+     BODY602_GM          =  (               7.965560332275966    )
+     BODY603_GM          =  (              41.15539505009249     )
+     BODY604_GM          =  (              72.06935538725874     )
+     BODY605_GM          =  (             154.0008330906687      )
+     BODY606_GM          =  (            8978.172706706628       )
+     BODY607_GM          =  (               1.896561983875230    )
+     BODY608_GM          =  (             105.8281587002378      )
+     BODY609_GM          =  (               9.103497522601104D-1 )
+     BODY610_GM          =  (              13.50352132519164D-2  )
+     BODY611_GM          =  (              37.51399604105205D-3  )
+     BODY612_GM          =  (              11.37937190325138D-4  )
+     BODY613_GM          =  (               3.793123967750460D-4 )
+     BODY614_GM          =  (               2.655186777425322D-4 )
+     BODY615_GM          =  (              11.37937190325138D-4  )
+     BODY616_GM          =  (               3.413811570975414D-2 )
+     BODY617_GM          =  (              22.75874380650276D-3  )
+     BODY618_GM          =  (              28.44842975812845D-5  )
+     BODY699_GM          =  (        37931239.677504600          )
+
+     \begintext
+
+
+The Uranian System
+
+     Sun GM / Uranus system GM  =  22902.98
+   
+     BODY7_GM/PRIMARY    =  (               0.43662440433515630D-04  )
+     BODY701_GM/PRIMARY  =  (              15.6D-6                   )
+     BODY702_GM/PRIMARY  =  (              13.5D-6                   )
+     BODY703_GM/PRIMARY  =  (              40.6D-6                   )
+     BODY704_GM/PRIMARY  =  (              34.7D-6                   )
+     BODY705_GM/PRIMARY  =  (              75.9D-8                   )
+     BODY706_GM/PRIMARY  =  (               2.D-10                   )
+     BODY707_GM/PRIMARY  =  (               3.D-10                   )
+     BODY708_GM/PRIMARY  =  (               8.D-10                   )
+     BODY709_GM/PRIMARY  =  (               3.D-9                    )
+     BODY710_GM/PRIMARY  =  (               2.D-9                    )
+     BODY711_GM/PRIMARY  =  (               5.D-9                    )
+     BODY712_GM/PRIMARY  =  (              12.D-9                    )
+     BODY713_GM/PRIMARY  =  (              18.D-10                   )
+     BODY714_GM/PRIMARY  =  (               3.D-9                    )
+     BODY715_GM/PRIMARY  =  (               6.D-8                    )
+   
+   
+     \begindata
+   
+     BODY7_GM            =  (         5794549.008117694          )
+     BODY701_GM          =  (              90.38545171996032     )
+     BODY702_GM          =  (              78.21817937304257     )
+     BODY703_GM          =  (             235.2339320404095      )
+     BODY704_GM          =  (             201.0496906847835      )
+     BODY705_GM          =  (               4.397599862528838    )
+     BODY706_GM          =  (              11.58787842563594D-4  )
+     BODY707_GM          =  (              17.38181763845391D-4  )
+     BODY708_GM          =  (               4.635151370254375D-3 )
+     BODY709_GM          =  (              17.38181763845391D-3  )
+     BODY710_GM          =  (              11.58787842563594D-3  )
+     BODY711_GM          =  (               2.896969606408984D-2 )
+     BODY712_GM          =  (               6.952727055381562D-2 )
+     BODY713_GM          =  (              10.42909058307234D-3  )
+     BODY714_GM          =  (              17.38181763845391D-3  )
+     BODY715_GM          =  (               3.476363527690781D-1 )
+     BODY799_GM          =  (         5793939.2128179700         )
+
+     \begintext
+
+
+The Neptunian System
+
+     Sun GM / Neptune system GM  =  19412.24
+
+     BODY8_GM/PRIMARY    =  (               0.51513890205355000D-04 )
+     BODY801_GM/PRIMARY  =  (            2089.1D-7                  )
+     BODY802_GM/PRIMARY  =  (               3.D-7                   )
+     BODY803_GM/PRIMARY  =  (              15.D-10                  )
+     BODY804_GM/PRIMARY  =  (               4.D-9                   )
+     BODY805_GM/PRIMARY  =  (               2.D-8                   )
+     BODY806_GM/PRIMARY  =  (               3.D-8                   )
+     BODY807_GM/PRIMARY  =  (               6.D-8                   )
+     BODY808_GM/PRIMARY  =  (               6.D-7                   )
+   
+     \begindata
+
+     BODY8_GM            =  (         6836534.065205220          )
+     BODY801_GM          =  (            1427.920574621435       )
+     BODY802_GM          =  (               2.050529761076207    )
+     BODY803_GM          =  (              10.2526488053810D-3   )
+     BODY804_GM          =  (               2.734039681434943D-2 )
+     BODY805_GM          =  (              13.67019840717471D-2  )
+     BODY806_GM          =  (              20.50529761076207D-2  )
+     BODY807_GM          =  (               4.101059522152414D-1 )
+     BODY808_GM          =  (               4.101059522152414    )
+     BODY899_GM          =  (         6835099.2035873600         )
+
+     \begintext
+
+
+The Plutonian System
+
+     Sun GM / Pluto system GM  =  140000000.
+   
+     BODY9_GM/PRIMARY    =  (               0.71428571428571430D-08 )
+     BODY901_GM/PRIMARY  =  (               8.4D-2                  )
+   
+     \begindata
+   
+     BODY9_GM            =  (             947.9460002995671      )
+     BODY901_GM          =  (              73.45707013391480     )
+     BODY999_GM          =  (             874.48893016565220     )
+   
+
+
+

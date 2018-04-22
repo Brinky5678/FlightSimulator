@@ -1,1 +1,0 @@
-struct NeptuneType <: abstractPlanet end 

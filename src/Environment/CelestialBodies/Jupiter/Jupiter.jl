@@ -1,1 +1,0 @@
-struct JupiterType <: abstractPlanet end 
