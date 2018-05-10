@@ -6,11 +6,8 @@ function GetGravAccel(sys::PlanetarySystem, Pos::Vector{T}, ep::S) where {T,S <:
         PosCart = Pos - CelestialBodyPosition(sys.InertialFrame_Body, body, ep)
 
         #Compute gravitational contribution of the current celestial body in the V-frame w.r.t. the C.o.M. of the current selected body -> Transform to inertial frame
-        if (typeof(body) <: abstractStar) #in the case of a star, always use central gravity
-            glocalv = CentralGravity(body, PosCart)
-        else
-            glocalv = body.Environment.GravityModel(body, PosCart)
-        end
+        glocalv = gravity(body, PosCart)
+
         #Compute the rotation quaternion of the V-frame of the current celestial body to the inertial frame (J2000)
         #Because they are vectors, no translation is needed, as the inertial frame of each body is equal to the global inertial frame (in orientation)
         Rsph,lon,lat = PositionCart2Sph(PosCart)
@@ -22,6 +19,6 @@ function GetGravAccel(sys::PlanetarySystem, Pos::Vector{T}, ep::S) where {T,S <:
 end 
 
 #Clearly a need to transform a position vector w.r.t. a body to the inertial frame. 
-function GetInertialFramePos(sys::PlanetarySystem, Body::T, Pos::Vector{S}, ep::P) where {T <: abstractCelestialBody, S,P <: Real}
+function GetInertialFramePos(sys::PlanetarySystem, Body::Type{<:abstractCelestialBody}, Pos::Vector{S}, ep::P) where {S,P <: Real}
     return (Pos + CelestialBodyPosition(sys.InertialFrame_Body, Body, ep))
 end 

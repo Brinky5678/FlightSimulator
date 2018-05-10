@@ -3,12 +3,11 @@ module FlightSimulator
 
 #using DifferentialEquations
 
-export SSB, MercuryBarycenter, VenusBarycenter, EarthMoonBarycenter, MarsBarycenter, JupiterBarycenter
-export SaturnBarycenter, NeptuneBarycenter, UranusBarycenter, PlutoBarycenter
-export Sun, Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Neptune, Uranus, Pluto
-export SunType, MercuryType, VenusType, EarthType, MoonType, MarsType, JupiterType, SaturnType, NeptuneType, UranusType, PlutoType
+export SSB, MERCURY_BARYCENTER, VENUS_BARYCENTER, EARTH_BARYCENTER, MARS_BARYCENTER, JUPITER_BARYCENTER
+export SATURN_BARYCENTER, NEPTUNE_BARYCENTER, URANUS_BARYCENTER, PLUTO_BARYCENTER
+export SUN, MERCURY, VENUS, EARTH, MOON, MARS, JUPITER, SATURN, NEPTUNE, URANUS, PLUTO
 export abstractCelestialBody
-export PlanetarySystem, GetInertialFramePos, GetGravAccel, LoadKernels, naif_id, parent
+export PlanetarySystem, GetInertialFramePos, GetGravAccel, LoadKernels, naif_id, parent, gravity
 
 #include global Dictionaries
 #include("solver\\GlobalDictionaries.jl")

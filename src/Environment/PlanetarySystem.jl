@@ -4,14 +4,14 @@ abstract type abstractPlanetarySystem end
 #define structure that contains all (actively selected) plantery bodies in the system
 # some validation is included to determine no unphysical combinations are selected! (only the Sun and the Moon, for example)
 struct PlanetarySystem <: abstractPlanetarySystem 
-    Bodies::Vector{T} where {T <: abstractCelestialBody}
+    Bodies::Vector{DataType}
     StarsSelected::Int
     PlanetsSelected::Int
     MoonsSelected::Int
     InertialFrame_Body::Type{<:abstractCelestialBody} 
 
     #Define constructor and validate entries
-    function PlanetarySystem(Bodies::Vector{B}) where {B <: abstractCelestialBody}
+    function PlanetarySystem(Bodies::Vector{DataType})
         resultOK, StarsSelected, PlanetsSelected, MoonsSelected  = SystemValidation(Bodies)
         if resultOK
             if_id = GetInertialFrame(Bodies, StarsSelected, PlanetsSelected, MoonsSelected)
@@ -23,7 +23,7 @@ struct PlanetarySystem <: abstractPlanetarySystem
 end #struct 
 
 #Check if the system is physically reasonable
-function SystemValidation(Bodies::Vector{T}) where {T <: abstractCelestialBody}
+function SystemValidation(Bodies::Vector{DataType})
     #If true then more than one planet is selected without the Sun! 
     StarSelected = 0
     PlanetSelected = 0 
@@ -31,12 +31,14 @@ function SystemValidation(Bodies::Vector{T}) where {T <: abstractCelestialBody}
     MoonValidated = 0
     result = false 
     for body in Bodies 
-        if typeof(body) <: abstractStar #if currently selected body is a Star
+        if body <: abstractStar #if currently selected body is a Star
             StarSelected += 1 
-        elseif typeof(body) <: abstractPlanet  #if currently selected body is a Planet
+        elseif body <: abstractPlanet  #if currently selected body is a Planet
             PlanetSelected += 1
-        elseif typeof(body) <: abstractNaturalSatellite  #if currently selected body is a Moon
+        elseif body <: abstractNaturalSatellite  #if currently selected body is a Moon
             MoonSelected += 1
+        else #if its neither of the above types, something wrong was selected.
+            return false, StarSelected, PlanetSelected, MoonSelected
         end 
     end 
 
@@ -48,9 +50,9 @@ function SystemValidation(Bodies::Vector{T}) where {T <: abstractCelestialBody}
             return true, StarSelected, PlanetSelected, MoonSelected  
         elseif PlanetSelected >= 1 && MoonSelected >= 1 #Planets and moons selected -> must check if moon have their main bodies (because sun is present)
             for body in Bodies #loop over all bodies to find all moons  
-                if typeof(body) <: abstractNaturalSatellite #check if currently selected object is a moon 
+                if body <: abstractNaturalSatellite #check if currently selected object is a moon 
                     for body2 in Bodies #loop over all bodies to find the planet of the moon
-                        if typeof(body2) <: abstractPlanet #check if currently selected body is a planet
+                        if body2 <: abstractPlanet #check if currently selected body is a planet
                             if parent(body) == parent(body2)  #check if both share the same parent (the common barycenter of the planet-moon system)
                                 MoonValidated += 1
                             end #validate
@@ -80,9 +82,9 @@ function SystemValidation(Bodies::Vector{T}) where {T <: abstractCelestialBody}
             return false, StarSelected, PlanetSelected, MoonSelected  
         elseif PlanetSelected == 1 && MoonSelected >= 1 #Can be valid, if the single planet shares the barycenter with all moons (for example, jupiter system)
             for mooncand in Bodies 
-                if typeof(mooncand) <: abstractNaturalSatellite 
+                if mooncand <: abstractNaturalSatellite 
                     for planetcand in Bodies
-                        if typeof(planetcand) <: abstractPlanet
+                        if planetcand <: abstractPlanet
                             if parent(mooncand) == parent(planetcand)
                                 MoonValidated += 1
                             end 
@@ -104,19 +106,17 @@ function SystemValidation(Bodies::Vector{T}) where {T <: abstractCelestialBody}
 end #Function TwoPlanetsWithoutSunSelected
 
 #Determine inertial reference frame from the list of Bodies
-function GetInertialFrame(Bodies::Vector{T}, StarsSelected::Int ,PlanetsSelected::Int, 
-        MoonsSelected::Int) where {T <: abstractCelestialBody}
+function GetInertialFrame(Bodies::Vector{DataType}, StarsSelected::Int ,PlanetsSelected::Int, 
+        MoonsSelected::Int)
     if StarsSelected == 1 
         return SSB
     else 
         if PlanetsSelected == 0 && MoonsSelected == 0 #Nothing selected (free space)
             error("Nothing Selected!")
         elseif PlanetsSelected == 1 && MoonsSelected == 0 #Only a single planet 
-            return Bodies[1].Name
+            return Bodies[1]
         elseif PlanetsSelected >= 2 #more than one planet without sun, should have been found by validation
             error("Validation has failed! More than one Planet selected without central star")
-        elseif PlanetsSelected == 1 && MoonsSelected == 1 #Planet with moon (Validated Already)
-            return parent(Bodies[1]) #Both have common barycenter
         elseif PlanetsSelected == 1 && MoonsSelected >= 1 #single planet with multiple moons (Validated already)
             return parent(Bodies[1]) #all have common barycenter
         end

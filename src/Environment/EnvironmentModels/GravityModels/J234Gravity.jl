@@ -1,12 +1,12 @@
-function J234Gravity(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCelestialBody}
+function J234Gravity(Body::Type{<:abstractCelestialBody}, PosRsph::Vector{Float64})
   g = zeros(3)
   #Convert δ (latitude) into co-latitude α
   α = pi/2 - PosRsph[3];
   Re_r = mean_radius(Body)/PosRsph[1]
-  J2planet = j2(Body)
-  J3planet = j3(Body)
-  J4planet = j4(Body)
-  muplanet = mu(Body)
+  J2planet = J2(Body)
+  J3planet = J3(Body)
+  J4planet = J4(Body)
+  muplanet = GM(Body)
   R = PosRsph[1]
   sec_a = 0
   #Division by zero check

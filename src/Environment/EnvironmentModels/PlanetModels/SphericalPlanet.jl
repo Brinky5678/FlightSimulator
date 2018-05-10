@@ -4,6 +4,6 @@ h = SphericalAltitude(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCel
 ```
 Computes the altitude above a spherical central body with radius Re.
 """
-function SphericalAltitude(Body::T, PosRsph::Vector{Float64}) where {T <: abstractCelestialBody}
+function SphericalAltitude(Body::Type{<:abstractCelestialBody}, PosRsph::Vector{Float64})
   return PosRsph[1] - mean_radius(Body)
 end
