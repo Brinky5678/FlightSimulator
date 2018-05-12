@@ -94,6 +94,24 @@ velocity(s::State) = s[1:3]
 position(s::State) = s[4:6]
 angularvelocity(s::State) = s[7:9]
 orientation(s::State) = Quaternion(s[10], s[11:13])
+State(vel::Vector{Float64}, pos::Vector{Float64}) = State(vel, pos, zeros(3))
+State(vel::Vector{Float64}, pos::Vector{Float64}, angvel::Vector{Float64}) = State(vel, pos, angvel, zeros(4))
+
+function State(x::Vector{Float64})
+    if length(x) == 3
+        return State(x[1:3], zeros(3))
+    elseif length(x) == 6
+        return State(x[1:3], x[4:6])
+    elseif length(x) == 13
+        return State(x[1:3], x[4:6], x[7:9], x[10:13])
+    end 
+end 
+
+function State(vel::Vector{Float64}, pos::Vector{Float64}, angvel::Vector{Float64}, quat::Vector{Float64}) 
+    State(vel[1], vel[2], vel[3], pos[1], pos[2], pos[3], 
+        angvel[1], angvel[2], angvel[3], quat[1], quat[2], quat[3], quat[4])
+end 
+
 function State(vel::Vector{T} = zeros(3),pos::Vector{S} = zeros(3),
         angvel::Vector{R} = zeros(3), quat::Quaternion = Quaternion(0., [0., 0., 0.])) where {T,S,R <: Real}
     State(vel[1], vel[2], vel[3], pos[1], pos[2], pos[3], 

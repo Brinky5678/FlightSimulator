@@ -6,7 +6,7 @@ export VehicleAeroDataBase
 
 abstract type AbstractVehicleDataBase end
 
-FM_Contributions = Dict{String, Integer}("CD" => 1,
+FM_Contributions = Dict{String,Integer}("CD" => 1,
                                           "CS" => 2,
                                           "CL" => 3,
                                           "Cl" => 4,
@@ -19,12 +19,12 @@ FM_Contributions = Dict{String, Integer}("CD" => 1,
 =#
 mutable struct VehicleAeroDataBase <: AbstractVehicleDataBase
   #Vehicle and Control State Contributions (can be non-linear)
-  CDdb::AeroDataBase #Drag
-  CSdb::AeroDataBase #Side
-  CLdb::AeroDataBase #Lift
-  Cldb::AeroDataBase #roll
-  Cmdb::AeroDataBase #pitch
-  Cndb::AeroDataBase #yaw
+    CDdb::AeroDataBase #Drag
+    CSdb::AeroDataBase #Side
+    CLdb::AeroDataBase #Lift
+    Cldb::AeroDataBase #roll
+    Cmdb::AeroDataBase #pitch
+    Cndb::AeroDataBase #yaw
 
  #= Input each axis as a variable amount of arrays encoding the relation
     between the contributions and the inputs it depends on. Size of of array
@@ -35,102 +35,93 @@ mutable struct VehicleAeroDataBase <: AbstractVehicleDataBase
     after that will be the next contribution array.
     The syntax is:
     VehicleAeroDataBase("CD",CD1,["x", CDx], ["y", Cdy],...,"CS",CS1,...) =#
-function VehicleAeroDataBase(varargs...)
-  this = new()
-  this.CDdb = AeroDataBase("CD")
-  this.CSdb = AeroDataBase("CS")
-  this.CLdb = AeroDataBase("CL")
-  this.Cldb = AeroDataBase("Cl")
-  this.Cmdb = AeroDataBase("Cm")
-  this.Cndb = AeroDataBase("Cn")
+    function VehicleAeroDataBase(varargs...)
+        this = new()
+        this.CDdb = AeroDataBase("CD")
+        this.CSdb = AeroDataBase("CS")
+        this.CLdb = AeroDataBase("CL")
+        this.Cldb = AeroDataBase("Cl")
+        this.Cmdb = AeroDataBase("Cm")
+        this.Cndb = AeroDataBase("Cn")
 
-  counter = 1
-  curr_key = ""
-  nvarargs = length(varargs)
-  while counter <= nvarargs
-    if isa(varargs[counter],String) #new key
-      haskey(FM_Contributions, varargs[counter]) ? nothing :
-        error("An option has been selected that is not allowed")
-      curr_key = varargs[counter]
-      counter += 1
-      #As long as no new key is inputted, assume new input
-      while !isa(varargs[counter],String)
-        sizeinput = ndims(varargs[counter])
-        if curr_key == "CD"
-          this.CDdb.AddContribution(varargs[counter],
-            varargs[(counter + 1):(counter + sizeinput)])
-        elseif curr_key == "CS"
-          this.CSdb.AddContribution(varargs[counter],
-            varargs[(counter + 1):(counter + sizeinput)])
-        elseif curr_key == "CL"
-          this.CLdb.AddContribution(varargs[counter],
-            varargs[(counter + 1):(counter + sizeinput)])
-        elseif curr_key == "Cl"
-          this.Cldb.AddContribution(varargs[counter],
-            varargs[(counter + 1):(counter + sizeinput)])
-        elseif curr_key == "Cm"
-          this.Cmdb.AddContribution(varargs[counter],
-            varargs[(counter + 1):(counter + sizeinput)])
-        elseif curr_key == "Cn"
-          this.Cndb.AddContribution(varargs[counter],
-            varargs[(counter + 1):(counter + sizeinput)])
-        else
-          error("Something Unexpected Happenend")
+        counter = 1
+        curr_key = ""
+        nvarargs = length(varargs)
+        while counter <= nvarargs
+            if isa(varargs[counter], String) #new key
+                haskey(FM_Contributions, varargs[counter]) ? nothing : error("An option has been selected that is not allowed")
+                curr_key = varargs[counter]
+                counter += 1
+                #As long as no new key is inputted, assume new input
+                while !isa(varargs[counter], String)
+                    sizeinput = ndims(varargs[counter])
+                    if curr_key == "CD"
+                        this.CDdb.AddContribution(varargs[counter], varargs[(counter + 1):(counter + sizeinput)])
+                    elseif curr_key == "CS"
+                        this.CSdb.AddContribution(varargs[counter], varargs[(counter + 1):(counter + sizeinput)])
+                    elseif curr_key == "CL"
+                        this.CLdb.AddContribution(varargs[counter], varargs[(counter + 1):(counter + sizeinput)])
+                    elseif curr_key == "Cl"
+                        this.Cldb.AddContribution(varargs[counter], varargs[(counter + 1):(counter + sizeinput)])
+                    elseif curr_key == "Cm"
+                        this.Cmdb.AddContribution(varargs[counter], varargs[(counter + 1):(counter + sizeinput)])
+                    elseif curr_key == "Cn"
+                        this.Cndb.AddContribution(varargs[counter], varargs[(counter + 1):(counter + sizeinput)])
+                    else
+                        error("Something Unexpected Happenend")
+                    end
+                    #update counter
+                    counter += sizeinput + 1
+                    #check whether more inputs exist
+                    if counter > nvarargs
+                        break
+                    end
+                end
+            else
+                error("Unexpected Input")
+            end
         end
-        #update counter
-        counter += sizeinput + 1
-        #check whether more inputs exist
-        if counter > nvarargs
-          break
-        end
-      end
-    else
-      error("Unexpected Input")
-    end
-  end
- return this
-end #Constructor
+        return this
+    end #Constructor
 end #TypeDef
 
 #Convert AerodynamicDatabase to a function computing the coefficients
 function AeroDBtoFunc(db::VehicleAeroDataBase, VehAeroDataBaseInputOrder::Dict{String,Integer})
-  FuncArray = Array{Function,1}(6)
-  FuncArray[1] = AeroFuncArrayContr(db.CDdb, VehAeroDataBaseInputOrder)
-  FuncArray[2] = AeroFuncArrayContr(db.CSdb, VehAeroDataBaseInputOrder)
-  FuncArray[3] = AeroFuncArrayContr(db.CLdb, VehAeroDataBaseInputOrder)
-  FuncArray[4] = AeroFuncArrayContr(db.Cldb, VehAeroDataBaseInputOrder)
-  FuncArray[5] = AeroFuncArrayContr(db.Cmdb, VehAeroDataBaseInputOrder)
-  FuncArray[6] = AeroFuncArrayContr(db.Cndb, VehAeroDataBaseInputOrder)
+    FuncArray = Array{Function,1}(6)
+    FuncArray[1] = AeroFuncArrayContr(db.CDdb, VehAeroDataBaseInputOrder)
+    FuncArray[2] = AeroFuncArrayContr(db.CSdb, VehAeroDataBaseInputOrder)
+    FuncArray[3] = AeroFuncArrayContr(db.CLdb, VehAeroDataBaseInputOrder)
+    FuncArray[4] = AeroFuncArrayContr(db.Cldb, VehAeroDataBaseInputOrder)
+    FuncArray[5] = AeroFuncArrayContr(db.Cmdb, VehAeroDataBaseInputOrder)
+    FuncArray[6] = AeroFuncArrayContr(db.Cndb, VehAeroDataBaseInputOrder)
 
-  CoefficientsArray = function CoefficientsArray(state::Vector{Float64})
-    coeffarray = Vector{Float64}(6)
-    coeffarray[1] = FuncArray[1](state)
-    coeffarray[2] = FuncArray[2](state)
-    coeffarray[3] = FuncArray[3](state)
-    coeffarray[4] = FuncArray[4](state)
-    coeffarray[5] = FuncArray[5](state)
-    coeffarray[6] = FuncArray[6](state)
-    return coeffarray
-  end #CoefficientsArray
-  return CoefficientsArray
+    CoefficientsArray = function CoefficientsArray(state::Vector{Float64})
+        coeffarray = Vector{Float64}(6)
+        coeffarray[1] = FuncArray[1](state)
+        coeffarray[2] = FuncArray[2](state)
+        coeffarray[3] = FuncArray[3](state)
+        coeffarray[4] = FuncArray[4](state)
+        coeffarray[5] = FuncArray[5](state)
+        coeffarray[6] = FuncArray[6](state)
+        return coeffarray
+    end #CoefficientsArray
+    return CoefficientsArray
 end #this.AeroDBtoFunc
 
-function AeroFuncArrayContr(db::AeroDataBase,
-   VehAeroDataBaseInputOrder::Dict{String, Integer})
-  idx = Vector{Int64}(0)
-  for str in db.ListOfInputs
-    idx = push!(idx, VehAeroDataBaseInputOrder[str])
-  end
-
-  Func = function AeroContr(state::Vector{Float64})
-    coeff = 0.
-    for i=1:length(db.ListOfContributions)
-      coeff += lininterpnvar(db.ListOfInputValues[i],db.ListOfContributions[i],
-        state[idx[db.ListOfInputOrder[i]]])
+function AeroFuncArrayContr(db::AeroDataBase, VehAeroDataBaseInputOrder::Dict{String,Integer})
+    idx = Vector{Int64}(0)
+    for str in db.ListOfInputs
+        idx = push!(idx, VehAeroDataBaseInputOrder[str])
     end
-    return coeff
-  end
-  return Func
+
+    Func = function AeroContr(state::Vector{Float64})
+        coeff = 0.
+        for i = 1:length(db.ListOfContributions)
+            coeff += lininterpnvar(db.ListOfInputValues[i], db.ListOfContributions[i], state[idx[db.ListOfInputOrder[i]]])
+        end
+        return coeff
+    end
+    return Func
 end #AeroFuncArrayContribution
 
 ##Example

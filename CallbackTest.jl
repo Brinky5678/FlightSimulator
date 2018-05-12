@@ -1,5 +1,6 @@
 using DifferentialEquations
 using ParameterizedFunctions
+ENV["MPLBACKEND"]="qt4agg"
 using PyPlot
 
 f = @ode_def_bare BallBounce begin
@@ -40,4 +41,4 @@ for x in sol.u
   idx += 1
 end
 
-#plot(sol.t, v)
+plot(sol.t, v)

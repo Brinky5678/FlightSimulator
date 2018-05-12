@@ -1,5 +1,12 @@
 #This file is simply a small script to load the enviroment files/types in the correct order
 
+#Objects to export 
+export SSB, MERCURY_BARYCENTER, VENUS_BARYCENTER, EARTH_BARYCENTER, MARS_BARYCENTER, JUPITER_BARYCENTER
+export SATURN_BARYCENTER, NEPTUNE_BARYCENTER, URANUS_BARYCENTER, PLUTO_BARYCENTER
+export SUN, MERCURY, VENUS, EARTH, MOON, MARS, JUPITER, SATURN, NEPTUNE, URANUS, PLUTO
+export abstractCelestialBody
+export PlanetarySystem, GetInertialFramePos, GetGravAccel, LoadKernels, naif_id, parent, gravity
+
 #import needed external libraries
 import SPICE: furnsh, pxform, sxform, spkezr, spkpos, bodc2n, bodfnd, bodvcd
 

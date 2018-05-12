@@ -27,7 +27,8 @@ struct SimulationOptions
     end
 
     this = new(lowercase(ODE_SolverIn),
-               lowercase(DofSimTypeIn));
+               lowercase(DofSimTypeIn),
+               SimulationTime);
 
   end
 end

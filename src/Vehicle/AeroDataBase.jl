@@ -1,7 +1,6 @@
 #Type definition for the aerodynamic database, including a function to
 # add new contributions per contribution. (TBD: Including a remove function)
 export AbstractDataBase
-
 export AeroDataBase
 
 abstract type AbstractDataBase end

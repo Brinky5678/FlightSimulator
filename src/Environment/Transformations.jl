@@ -58,7 +58,7 @@ Computes the spherical position from its cartesian components.
 """
 function PositionCart2Sph(PosCart::Vector{T}) where {T <: Real}
   return [norm(PosCart), atan2(PosCart[2], PosCart[1]),
-    atan2(PosCart[3], norm(PosCart))]
+    asin(PosCart[3]/norm(PosCart))]
 end
 
 """

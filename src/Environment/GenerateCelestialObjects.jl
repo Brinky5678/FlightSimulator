@@ -46,11 +46,11 @@ for i = 1:9
         frame(::Type{$planetsymbol}) = "IAU_" * bodc2n($i * 100 + 99)
         gravity(body::Type{$planetsymbol}, posRsph::Vector{Float64}) = CentralGravity(body, posRsph)
         altitude(body::Type{$planetsymbol}, posRsph::Vector{Float64}) = SphericalAltitude(body, posRsph)
-        atmosphere(body::Type{$planetsymbol}, posRsph::Vector{Float64}) = [0., 0., 0., 0.]
-        density(body::Type{$planetsymbol}, posRsph::Vector{Float64}) = atmosphere(body, posRsph)[1]
-        pressure(body::Type{$planetsymbol}, posRsph::Vector{Float64}) = atmosphere(body, posRsph)[2]
-        temperature(body::Type{$planetsymbol}, posRsph::Vector{Float64}) = atmosphere(body, posRsph)[3]
-        speedofsound(body::Type{$planetsymbol}, posRsph::Vector{Float64}) = atmosphere(body, posRsph)[4]
+        atmosphere(body::Type{$planetsymbol}, posRsph::Vector{Float64}, ep::Float64) = [0., 0., 0., 0.]
+        density(body::Type{$planetsymbol}, posRsph::Vector{Float64}, ep::Float64) = atmosphere(body, posRsph, ep)[1]
+        pressure(body::Type{$planetsymbol}, posRsph::Vector{Float64}, ep::Float64) = atmosphere(body, posRsph, ep)[2]
+        temperature(body::Type{$planetsymbol}, posRsph::Vector{Float64}, ep::Float64) = atmosphere(body, posRsph, ep)[3]
+        speedofsound(body::Type{$planetsymbol}, posRsph::Vector{Float64}, ep::Float64) = atmosphere(body, posRsph, ep)[4]
         #println("Created: ", $planetname, " With NAIF_ID of: ", naif_id($planetsymbol))
     end
 
