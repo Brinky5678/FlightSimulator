@@ -102,7 +102,6 @@ function SystemValidation(Bodies::Vector{DataType})
 
     #If the codes makes it to here, the validation has failed
     return false, StarSelected, PlanetSelected, MoonSelected  
- 
 end #Function TwoPlanetsWithoutSunSelected
 
 #Determine inertial reference frame from the list of Bodies
