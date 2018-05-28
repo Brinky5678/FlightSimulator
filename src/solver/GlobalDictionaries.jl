@@ -14,7 +14,8 @@ ODETYPES = Dict{String, Integer}(
 DOFSIMTYPES = Dict{String, Integer}(
     "trans" => 1,
     "rot" => 2,
-    "transrot" => 3);
+    "5dof" => 3, #Allows the user to give an anle-of-attack and a bank-angle that the vehicle will instantly have (sideslip always zero) 
+    "transrot" => 4);
 
 #Add function to allow for custom ode solvers
 function NewODEType(odetype::String, odealg)

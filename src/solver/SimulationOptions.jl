@@ -9,14 +9,14 @@ struct SimulationOptions
     #ODE Type Checker
     if !haskey(ODETYPES, lowercase(ODE_SolverIn))
       warn("ODE Solver Type Not Found, Setting Solver Type to Default (Tsit5)")
-      ODE_SolverIn::String = "tsit5"
+      ODE_SolverIn = "tsit5"
     end
 
     #DofSimType Checker
     if !haskey(DOFSIMTYPES, lowercase(DofSimTypeIn))
       warn("Degrees of Freedom Type Not Found, Setting Degrees
             of Freedom Type to Default (Trans)")
-      DofSimTypeIn::String = "trans"
+      DofSimTypeIn = "trans"
     end
 
     #SimulationTime Checker

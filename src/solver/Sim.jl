@@ -6,7 +6,7 @@ function sim(vehicle::S, env::PlanetarySystem, ep::T, opt::SimulationOptions) wh
     SimulationTime = opt.SimulationTime
     ####################################################
     #Get EOM (ODEProblem) from the environment structure
-    eom = EOM(vehicle, env, ep)
+    eom = EOM(vehicle, env, ep, opt)
     prob = ODEProblem(eom, vehicle.InitialState, (0, SimulationTime))
 
     ####################################################
